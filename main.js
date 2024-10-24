@@ -9,7 +9,10 @@
 // })
 let counter = 1
 
+
+//calculation
 document.getElementById("calc").addEventListener("click", function() {
+  let pVal = 0;
   let primeroSum = [];
   let segundoSum = [];
   let pSum = 0;
@@ -40,13 +43,19 @@ for(let j = 0; j<counter; j++){
 pSum = Math.pow(Math.abs(pSum)-0.5,2);
 console.log(pSum)
 console.log(sSum)
+if(sSum==0){pVal="Undefined or Error"}
+else{
 let almostDone = pSum/sSum;
 console.log(almostDone);
-let done = jStat.chisquare.cdf(almostDone, 1);
-console.log(done);
-})
+pVal = 1-jStat.chisquare.cdf(almostDone, 1);
+}
+console.log(pVal);
+}
+)
 
 
+
+//add boxes button
 document.getElementById("addButton").addEventListener("click", function() {
   var inputContainer = document.getElementById("inputContainer");
   counter++;
@@ -55,7 +64,17 @@ document.getElementById("addButton").addEventListener("click", function() {
           var br = document.createElement("br");
           inputContainer.appendChild(br);
       }
+      
       var newInput = document.createElement("input");
       newInput.type = "number";
       inputContainer.appendChild(newInput);
-}});
+}
+var br = document.createElement("br");
+inputContainer.appendChild(br);
+}
+);
+
+document.getElementById("subButton").addEventListener("click", function() {
+alert("VIRUS INFECTED QUACKY")
+}
+);

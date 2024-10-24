@@ -1,0 +1,16 @@
+.controls {
+    display: flex; flex-direction: row; align-items: center; justify-content: center;
+}
+
+button { 
+    color:rgb(0, 0, 0); 
+    font: old 84% 'trebuchet ms',helvetica,sans-serif; 
+    background-image:linear-gradient(to right bottom, rgb(168, 213, 255), rgb(255, 145, 138));
+    border:0px solid; 
+    border-color: #696 #363 #363 #696;
+    margin: 4px 2px; 
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size:x-large;
+}
