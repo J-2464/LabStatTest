@@ -75,6 +75,6 @@ inputContainer.appendChild(br);
 );
 
 document.getElementById("subButton").addEventListener("click", function() {
-alert("VIRUS INFECTED QUACKY")
+alert("VIRUS INFECTED BY HNERY RUTGERS")
 }
 );
