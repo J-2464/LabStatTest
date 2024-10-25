@@ -75,6 +75,21 @@ inputContainer.appendChild(br);
 );
 
 document.getElementById("subButton").addEventListener("click", function() {
-alert("VIRUS INFECTED BY HNERY RUTGERS")
+// alert("VIRUS INFECTED BY HNERY RUTGERS")
+if(counter>1){
+var inputContainer = document.getElementById("inputContainer");
+    
+// Get all input elements within the container
+var inputs = inputContainer.getElementsByTagName("input");
+var breaks = inputContainer.getElementsByTagName("br");
+// Remove inputs one by one
+for (var i = inputs.length - 1; i >= 4*counter-8; i--) {
+    inputContainer.removeChild(inputs[i]);
+}
+inputContainer.removeChild(breaks[breaks.length-3]);
+  inputContainer.removeChild(breaks[breaks.length-2]);
+  inputContainer.removeChild(breaks[breaks.length-1]);
+counter--
+}
 }
 );
