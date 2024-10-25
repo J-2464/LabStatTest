@@ -12,7 +12,7 @@ let counter = 1
 
 //calculation
 document.getElementById("calc").addEventListener("click", function() {
-  let pVal = 0;
+  var pVal = 0;
   let primeroSum = [];
   let segundoSum = [];
   let pSum = 0;
@@ -23,6 +23,10 @@ document.getElementById("calc").addEventListener("click", function() {
   let b = parseFloat(document.getElementsByTagName("input")[4*i+1].value);
   let c = parseFloat(document.getElementsByTagName("input")[4*i+2].value);
   let d = parseFloat(document.getElementsByTagName("input")[4*i+3].value);
+  if(isNaN(a)){a=0}
+  if(isNaN(b)){b=0}
+  if(isNaN(c)){c=0}
+  if(isNaN(d)){d=0}
   let exopherAB = b/(a+b);
   let exopherCD = d/(c+d);
   let tot = a+b+c+d;
@@ -43,13 +47,14 @@ for(let j = 0; j<counter; j++){
 pSum = Math.pow(Math.abs(pSum)-0.5,2);
 console.log(pSum)
 console.log(sSum)
-if(sSum==0){pVal="Undefined or Error"}
+if(sSum==0||isNaN(sSum)){pVal="Undefined or Error"}
 else{
 let almostDone = pSum/sSum;
 console.log(almostDone);
 pVal = 1-jStat.chisquare.cdf(almostDone, 1);
 }
 console.log(pVal);
+alert(pVal);
 }
 )
 
@@ -83,13 +88,20 @@ var inputContainer = document.getElementById("inputContainer");
 var inputs = inputContainer.getElementsByTagName("input");
 var breaks = inputContainer.getElementsByTagName("br");
 // Remove inputs one by one
-for (var i = inputs.length - 1; i >= 4*counter-8; i--) {
+for (var i = inputs.length - 1; i >= 4*counter-4; i--) {
     inputContainer.removeChild(inputs[i]);
 }
+//remove breaks might replace with words later...
 inputContainer.removeChild(breaks[breaks.length-3]);
   inputContainer.removeChild(breaks[breaks.length-2]);
   inputContainer.removeChild(breaks[breaks.length-1]);
-counter--
+counter--;
 }
+});
+
+document.getElementById("clear").addEventListener("click", function() {
+  for(let i = 0; i<counter*4; i++){
+  document.getElementsByTagName("input")[i].value='';
 }
-);
+})
+
