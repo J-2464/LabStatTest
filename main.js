@@ -64,6 +64,8 @@ alert(pVal);
 document.getElementById("addButton").addEventListener("click", function() {
   var inputContainer = document.getElementById("inputContainer");
   counter++;
+  var text = "Trial " + counter
+  inputContainer.append(text);
   for (var i = 0; i < 4; i++) {
       if (i%2 == 0) {
           var br = document.createElement("br");
@@ -95,6 +97,15 @@ for (var i = inputs.length - 1; i >= 4*counter-4; i--) {
 inputContainer.removeChild(breaks[breaks.length-3]);
   inputContainer.removeChild(breaks[breaks.length-2]);
   inputContainer.removeChild(breaks[breaks.length-1]);
+
+//text removal
+  const textNodes = Array.from(inputContainer.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
+  if (textNodes.length > 0) {
+      const lastTextNode = textNodes[textNodes.length - 1];
+      inputContainer.removeChild(lastTextNode);
+  }
+
+
 counter--;
 }
 });

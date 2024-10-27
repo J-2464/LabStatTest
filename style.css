@@ -1,6 +1,6 @@
 .controls {
     display: flex; flex-direction: row; align-items: center; justify-content: center;
-        position: sticky;
+        position: absolute; /* or stickt? */
         bottom: 0;
         left: 0;
         right: 0;
@@ -13,12 +13,11 @@ button {
     font: old 84% 'trebuchet ms',helvetica,sans-serif; 
     background-image:linear-gradient(to top, rgb(255, 0, 0), rgb(214, 214, 214));
     border:0px solid; 
-    border-color: #696 #363 #363 #696;
     margin: 4px 2px; 
-    padding: 10px;
+    padding: 15px;
     cursor: pointer;
     border-radius: 50%;
-    font-size:x-large;
+    font-size:xx-large;
 }
 
 input {
@@ -28,4 +27,9 @@ input {
     border-color: black;
     outline: none;
     box-shadow: none;
+}
+
+#inputContainer input {
+    margin: 0; /* Remove default margin */
+    display: inline-block; /* Adjust display to avoid extra space */
 }
