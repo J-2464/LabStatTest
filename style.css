@@ -1,10 +1,9 @@
 .controls {
     display: flex; flex-direction: row; align-items: center; justify-content: center;
-        position: absolute; /* or stickt? */
+        position: fixed; /* or stickt? */
         bottom: 0;
         left: 0;
         right: 0;
-        text-align: center;
         padding: 10px;
 }
 
@@ -22,11 +21,12 @@ button {
 
 input {
     padding: 10px;
-
     margin-right: -10px;
     border-color: black;
     outline: none;
     box-shadow: none;
+    font-size: larger;
+    width: 100px;
 }
 
 #inputContainer input {
