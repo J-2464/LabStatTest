@@ -19,10 +19,10 @@ document.getElementById("calc").addEventListener("click", function() {
   let sSum = 0;
   for(let i = 0; i<counter; i++){
 
-  let a = parseFloat(document.getElementsByTagName("input")[4*i].value);
-  let b = parseFloat(document.getElementsByTagName("input")[4*i+1].value);
-  let c = parseFloat(document.getElementsByTagName("input")[4*i+2].value);
-  let d = parseFloat(document.getElementsByTagName("input")[4*i+3].value);
+  let a = parseFloat(document.getElementsByTagName("input")[6*i].value);
+  let b = parseFloat(document.getElementsByTagName("input")[6*i+1].value);
+  let c = parseFloat(document.getElementsByTagName("input")[6*i+3].value);
+  let d = parseFloat(document.getElementsByTagName("input")[6*i+4].value);
   if(isNaN(a)){a=0}
   if(isNaN(b)){b=0}
   if(isNaN(c)){c=0}
@@ -66,8 +66,8 @@ document.getElementById("addButton").addEventListener("click", function() {
   counter++;
   var text = "Trial " + counter
   inputContainer.append(text);
-  for (var i = 0; i < 4; i++) {
-      if (i%2 == 0) {
+  for (var i = 0; i < 6; i++) {
+      if (i%3 == 0) {
           var br = document.createElement("br");
           inputContainer.appendChild(br);
       }
@@ -90,8 +90,8 @@ var inputContainer = document.getElementById("inputContainer");
 var inputs = inputContainer.getElementsByTagName("input");
 var breaks = inputContainer.getElementsByTagName("br");
 // Remove inputs one by one
-for (var i = inputs.length - 1; i >= 4*counter-4; i--) {
-    inputContainer.removeChild(inputs[i]);
+for (var i = inputs.length - 1; i >= 6*counter-6; i--) {
+    inputContainer.removeChild(inputs[i]); 
 }
 //remove breaks might replace with words later...
 inputContainer.removeChild(breaks[breaks.length-3]);
@@ -111,8 +111,27 @@ counter--;
 });
 
 document.getElementById("clear").addEventListener("click", function() {
-  for(let i = 0; i<counter*4; i++){
+  for(let i = 0; i<counter*6; i++){
   document.getElementsByTagName("input")[i].value='';
 }
+
+
 })
 
+
+document.getElementById("AutoFill").addEventListener("click", function() {
+  for(let i = 0; i<counter*6; i+=3){
+    let y = document.getElementsByTagName("input")[i].value
+    let n = document.getElementsByTagName("input")[i+1].value
+    let t = document.getElementsByTagName("input")[i+2].value
+  if(y==''&&n!=''&&t!=''){document.getElementsByTagName("input")[i].value=t-n}
+  else if(y!=''&&n==''&&t!=''){document.getElementsByTagName("input")[i+1].value=t-y}
+  else if(y!=''&&n!=''&&t==''){
+    y=y-0;
+    n=n-0;
+    document.getElementsByTagName("input")[i+2].value=y+n}
+  
+}
+
+
+})
