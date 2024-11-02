@@ -65,6 +65,7 @@ document.getElementById("addButton").addEventListener("click", function() {
   var inputContainer = document.getElementById("inputContainer");
   counter++;
   var text = "Trial " + counter
+  let ph = ["True" + counter + "A", "False" + counter + "A", "Total" + counter + "A", "True" + counter + "B", "False" + counter + "B", "Total" + counter + "B"]
   inputContainer.append(text);
   for (var i = 0; i < 6; i++) {
       if (i%3 == 0) {
@@ -74,6 +75,7 @@ document.getElementById("addButton").addEventListener("click", function() {
       
       var newInput = document.createElement("input");
       newInput.type = "number";
+      newInput.placeholder = ph[i]
       inputContainer.appendChild(newInput);
 }
 var br = document.createElement("br");
