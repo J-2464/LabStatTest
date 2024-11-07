@@ -64,22 +64,97 @@ alert(pVal);
 document.getElementById("addButton").addEventListener("click", function() {
   var inputContainer = document.getElementById("inputContainer");
   counter++;
-  var text = "Trial " + counter
-  let ph = ["True" + counter + "A", "False" + counter + "A", "Total" + counter + "A", "True" + counter + "B", "False" + counter + "B", "Total" + counter + "B"]
-  inputContainer.append(text);
-  for (var i = 0; i < 6; i++) {
-      if (i%3 == 0) {
-          var br = document.createElement("br");
-          inputContainer.appendChild(br);
-      }
+//   var text = "Trial " + counter
+//   let ph = ["True" + counter + "A", "False" + counter + "A", "Total" + counter + "A", "True" + counter + "B", "False" + counter + "B", "Total" + counter + "B"]
+//   inputContainer.append(text);
+//   for (var i = 0; i < 6; i++) {
+//       if (i%3 == 0) {
+//           var br = document.createElement("br");
+//           inputContainer.appendChild(br);
+//       }
       
-      var newInput = document.createElement("input");
-      newInput.type = "number";
-      newInput.placeholder = ph[i]
-      inputContainer.appendChild(newInput);
-}
-var br = document.createElement("br");
-inputContainer.appendChild(br);
+//       var newInput = document.createElement("input");
+//       newInput.type = "number";
+//       newInput.placeholder = ph[i]
+//       inputContainer.appendChild(newInput);
+// }
+// var br = document.createElement("br");
+// inputContainer.appendChild(br);
+  var table = document.createElement("table");
+  table.border=2
+  const input = document.createElement('input'); // Create an input element
+  input.type = 'number'; // You can change this to 'checkbox', 'radio', etc. if needed
+  for(let i = 0; i<4; i++){
+    let row = document.createElement('tr');
+    for(let j = 0; j<4; j++){
+      const input = document.createElement('input'); // Create an input element
+      input.type = 'number'; // You can change this to 'checkbox', 'radio', etc. if needed
+      const cell = document.createElement('td')
+      switch (true) {
+        case (i === 0 && j === 0):
+          cell.textContent = "Trial " + counter;
+          cell.id = counter + "A" + j
+          break;
+        case (i === 0 && j === 1):
+          cell.id = counter + "A" + j
+          cell.textContent = document.getElementsByTagName("input")[0].value
+          break;
+        case (i === 0 && j === 2):
+          cell.id = counter + "A" + j
+          cell.textContent = document.getElementsByTagName("input")[1].value
+          break;
+        case (i === 0 && j === 3):
+          break;
+        case (i === 1 && j === 0):
+          cell.id = counter + "B" + j
+          cell.textContent = document.getElementsByTagName("input")[2].value
+          break;
+        case (i === 1 && j === 1):
+          cell.appendChild(input); 
+          break;
+        case (i === 1 && j === 2):
+          cell.appendChild(input); 
+          break;
+        case (i === 1 && j === 3):
+          cell.appendChild(input); 
+          break;
+
+        case (i === 2 && j === 0):
+          cell.id = counter + "C" + j
+          cell.textContent = document.getElementsByTagName("input")[6].value
+          break;
+        case (i === 2 && j === 1):
+          cell.appendChild(input); 
+          break;
+        case (i === 2 && j === 2):
+          cell.appendChild(input); 
+          break;
+        case (i === 2 && j === 3):
+          cell.appendChild(input); 
+          break;
+
+        case (i === 3 && j === 0):
+          break;
+        case (i === 3 && j === 1):
+          cell.textContent = 0;
+          cell.id = counter + "D" + j
+          break;
+        case (i === 3 && j === 2):
+          cell.textContent = 0;
+          cell.id = counter + "D" + j
+          break;
+        case (i === 3 && j === 3):
+          break;
+
+        default:
+          // Default case for other cells (not really necessary, all cases covered)
+          cell.textContent = `Row ${i+1}, Col ${j+1}`;
+      }
+      row.appendChild(cell);
+    }
+    table.appendChild(row);
+  }
+  inputContainer.appendChild(table);
 }
 );
 
@@ -87,25 +162,26 @@ document.getElementById("subButton").addEventListener("click", function() {
 // alert("VIRUS INFECTED BY HNERY RUTGERS")
 if(counter>1){
 var inputContainer = document.getElementById("inputContainer");
-    
-// Get all input elements within the container
-var inputs = inputContainer.getElementsByTagName("input");
-var breaks = inputContainer.getElementsByTagName("br");
-// Remove inputs one by one
-for (var i = inputs.length - 1; i >= 6*counter-6; i--) {
-    inputContainer.removeChild(inputs[i]); 
-}
-//remove breaks might replace with words later...
-inputContainer.removeChild(breaks[breaks.length-3]);
-  inputContainer.removeChild(breaks[breaks.length-2]);
-  inputContainer.removeChild(breaks[breaks.length-1]);
+var tables = document.getElementsByTagName("table");
+inputContainer.removeChild(tables[counter-1]);
+// // Get all input elements within the container
+// var inputs = inputContainer.getElementsByTagName("input");
+// var breaks = inputContainer.getElementsByTagName("br");
+// // Remove inputs one by one
+// for (var i = inputs.length - 1; i >= 6*counter-6; i--) {
+//     inputContainer.removeChild(inputs[i]); 
+// }
+// //remove breaks might replace with words later...
+// inputContainer.removeChild(breaks[breaks.length-3]);
+//   inputContainer.removeChild(breaks[breaks.length-2]);
+//   inputContainer.removeChild(breaks[breaks.length-1]);
 
-//text removal
-  const textNodes = Array.from(inputContainer.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
-  if (textNodes.length > 0) {
-      const lastTextNode = textNodes[textNodes.length - 1];
-      inputContainer.removeChild(lastTextNode);
-  }
+// //text removal
+//   const textNodes = Array.from(inputContainer.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
+//   if (textNodes.length > 0) {
+//       const lastTextNode = textNodes[textNodes.length - 1];
+//       inputContainer.removeChild(lastTextNode);
+//   }
 
 
 counter--;
@@ -113,8 +189,14 @@ counter--;
 });
 
 document.getElementById("clear").addEventListener("click", function() {
-  for(let i = 0; i<counter*6; i++){
-  document.getElementsByTagName("input")[i].value='';
+  document.getElementsByTagName("input")[3].value='';
+  document.getElementsByTagName("input")[4].value='';
+  document.getElementsByTagName("input")[5].value='';
+  document.getElementsByTagName("input")[7].value='';
+  document.getElementsByTagName("input")[8].value='';
+  document.getElementsByTagName("input")[9].value='';
+  for(let i = 0; i<counter*6+10; i++){
+  document.getElementsByTagName("input")[i+10].value='';
 }
 
 
@@ -122,7 +204,8 @@ document.getElementById("clear").addEventListener("click", function() {
 
 
 document.getElementById("AutoFill").addEventListener("click", function() {
-  for(let i = 0; i<counter*6; i+=3){
+  if(counter>1){
+  for(let i = 10; i<counter*6+4; i+=3){
     let y = document.getElementsByTagName("input")[i].value
     let n = document.getElementsByTagName("input")[i+1].value
     let t = document.getElementsByTagName("input")[i+2].value
@@ -132,7 +215,17 @@ document.getElementById("AutoFill").addEventListener("click", function() {
     y=y-0;
     n=n-0;
     document.getElementsByTagName("input")[i+2].value=y+n}
-  
+}}
+for(let i=3; i<9; i+=4){
+  let y = document.getElementsByTagName("input")[i].value
+  let n = document.getElementsByTagName("input")[i+1].value
+  let t = document.getElementsByTagName("input")[i+2].value
+if(y==''&&n!=''&&t!=''){document.getElementsByTagName("input")[i].value=t-n}
+else if(y!=''&&n==''&&t!=''){document.getElementsByTagName("input")[i+1].value=t-y}
+else if(y!=''&&n!=''&&t==''){
+  y=y-0;
+  n=n-0;
+  document.getElementsByTagName("input")[i+2].value=y+n}
 }
 
 

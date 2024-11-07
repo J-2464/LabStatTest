@@ -24,14 +24,19 @@ button:hover {
 }
 
 input {
-    padding: 20px;
-    border-color: black;
+    /* padding: 20px;
+    border-color: black; */
     outline: none;
     box-shadow: none;
-    font-size: x-large;
+    font-size: large;
     width: 120px;
 }
 
+table td {
+    width: 200px;
+    height: 80px;
+    text-align: center;
+}
 
 #inputContainer input {
     margin: 0; /* Remove default margin */
