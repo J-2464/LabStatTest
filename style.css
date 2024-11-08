@@ -27,15 +27,27 @@ input {
     /* padding: 20px;
     border-color: black; */
     outline: none;
+    border: none;
     box-shadow: none;
     font-size: large;
     width: 120px;
+}
+input:focus {
+    outline: 3px solid #4D90FE;  /* Blue outline when input is focused */
+    outline-offset: 2px;          /* Space between input and outline */
+}
+
+table {
+
+    border: 1px solid;
+    border-color: black;
 }
 
 table td {
     width: 200px;
     height: 80px;
     text-align: center;
+    border: 1px solid;
 }
 
 #inputContainer input {

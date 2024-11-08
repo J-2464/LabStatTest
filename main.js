@@ -18,11 +18,23 @@ document.getElementById("calc").addEventListener("click", function() {
   let pSum = 0;
   let sSum = 0;
   for(let i = 0; i<counter; i++){
+  let a = parseFloat(document.getElementsByTagName("input")[6*i+4].value);
+  let b = parseFloat(document.getElementsByTagName("input")[6*i+5].value);
+  let c = parseFloat(document.getElementsByTagName("input")[6*i+7].value);
+  let d = parseFloat(document.getElementsByTagName("input")[6*i+8].value);
+  if(i==0){
+     a = parseFloat(document.getElementsByTagName("input")[3].value);
+     b = parseFloat(document.getElementsByTagName("input")[4].value);
+     c = parseFloat(document.getElementsByTagName("input")[7].value);
+     d = parseFloat(document.getElementsByTagName("input")[8].value);
+  }
+  else{
 
-  let a = parseFloat(document.getElementsByTagName("input")[6*i].value);
-  let b = parseFloat(document.getElementsByTagName("input")[6*i+1].value);
-  let c = parseFloat(document.getElementsByTagName("input")[6*i+3].value);
-  let d = parseFloat(document.getElementsByTagName("input")[6*i+4].value);
+  };
+
+
+
+
   if(isNaN(a)){a=0}
   if(isNaN(b)){b=0}
   if(isNaN(c)){c=0}
@@ -81,7 +93,6 @@ document.getElementById("addButton").addEventListener("click", function() {
 // var br = document.createElement("br");
 // inputContainer.appendChild(br);
   var table = document.createElement("table");
-  table.border=2
   const input = document.createElement('input'); // Create an input element
   input.type = 'number'; // You can change this to 'checkbox', 'radio', etc. if needed
   for(let i = 0; i<4; i++){
