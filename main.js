@@ -8,7 +8,7 @@
 //   console.log(currentVal);
 // })
 let counter = 1
-
+const inputs = document.querySelectorAll('input, textarea');
 
 //calculation
 document.getElementById("calc").addEventListener("click", function() {
@@ -166,6 +166,7 @@ document.getElementById("addButton").addEventListener("click", function() {
     table.appendChild(row);
   }
   inputContainer.appendChild(table);
+  inputs = document.querySelectorAll('input, textarea');
 }
 );
 
@@ -196,6 +197,7 @@ inputContainer.removeChild(tables[counter-1]);
 
 
 counter--;
+inputs = document.querySelectorAll('input, textarea');
 }
 });
 
@@ -206,7 +208,7 @@ document.getElementById("clear").addEventListener("click", function() {
   document.getElementsByTagName("input")[7].value='';
   document.getElementsByTagName("input")[8].value='';
   document.getElementsByTagName("input")[9].value='';
-  for(let i = 0; i<counter*6+10; i++){
+  for(let i = 0; i<counter*6-6; i++){
   document.getElementsByTagName("input")[i+10].value='';
 }
 
@@ -241,3 +243,28 @@ else if(y!=''&&n!=''&&t==''){
 
 
 })
+
+//table updates
+
+function tableUpdates() {
+  let id;
+  console.log("yo")
+  for(let i = 1; i<counter; i++){
+    id = (i+1)+"A"+1
+    document.getElementById(id).textContent=document.getElementsByTagName("input")[0].value
+    id = (i+1)+"A"+2
+    document.getElementById(id).textContent=document.getElementsByTagName("input")[1].value
+    id = (i+1)+"B"+0
+    document.getElementById(id).textContent=document.getElementsByTagName("input")[2].value
+    id = (i+1)+"C"+0
+    document.getElementById(id).textContent=document.getElementsByTagName("input")[6].value
+    id = (i+1)+"D"+1
+    document.getElementById(id).textContent=0+document.getElementsByTagName("input")[6*i+4].value+document.getElementsByTagName("input")[6*i+7].value
+    id = (i+1)+"D"+2
+    document.getElementById(id).textContent=0+document.getElementsByTagName("input")[6*i+5].value+document.getElementsByTagName("input")[6*i+8].value
+  }
+}
+
+inputs.forEach(input => {
+  input.addEventListener('input', tableUpdates); // Trigger on 'input' change
+});
