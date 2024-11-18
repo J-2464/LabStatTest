@@ -6,6 +6,21 @@
         right: 0;
         padding: 10px;
 }
+.history {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 10%;
+    left: 25%;
+    right: 25%;
+    bottom: 10%;
+    background: rgb(255, 0, 0); /* Transparent black background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    border-color: black;
+    border: 5px solid;
+    border-radius: 100px;
+}
 
 body {
     font-family: 'Inter', sans-serif; /* Change to your desired font */
@@ -18,7 +33,7 @@ button {
     color:rgb(0, 0, 0); 
     font: old 84% 'trebuchet ms',helvetica,sans-serif; 
     background-image:linear-gradient(to top, rgb(255, 0, 0), rgb(214, 214, 214));
-    border:2px solid white; 
+    border:2px solid rgb(255, 255, 255); 
     margin: 4px 2px; 
     padding: 15px;
     cursor: pointer;
@@ -37,7 +52,12 @@ input {
     border: none;
     box-shadow: none;
     font-size: large;
-    width: 120px;
+    width: 160px;
+    height: 40px;
+    text-align: center;
+    -moz-appearance: textfield;  /* Firefox */
+    -webkit-appearance: none;    /* Chrome, Safari, Edge */
+    appearance: none;            /* Standard */
 }
 input:hover {
     outline: 1px solid #37393b;  /* Blue outline when input is focused */
@@ -45,7 +65,6 @@ input:hover {
 input:focus {
     outline: 2px solid #37393b;  /* Blue outline when input is focused */
 }
-
 table {
     border-color:inherit;
     border-collapse:collapse;

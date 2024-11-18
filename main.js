@@ -8,8 +8,7 @@
 //   console.log(currentVal);
 // })
 let counter = 1
-const inputs = document.querySelectorAll('input, textarea');
-
+let history = [];
 //calculation
 document.getElementById("calc").addEventListener("click", function() {
   var pVal = 0;
@@ -64,6 +63,7 @@ else{
 let almostDone = pSum/sSum;
 console.log(almostDone);
 pVal = 1-jStat.chisquare.cdf(almostDone, 1);
+history.push(pVal);
 }
 console.log(pVal);
 alert(pVal);
@@ -93,13 +93,13 @@ document.getElementById("addButton").addEventListener("click", function() {
 // var br = document.createElement("br");
 // inputContainer.appendChild(br);
   var table = document.createElement("table");
-  const input = document.createElement('input'); // Create an input element
-  input.type = 'number'; // You can change this to 'checkbox', 'radio', etc. if needed
+  // const input = document.createElement('input'); 
+  // input.type = 'number';
   for(let i = 0; i<4; i++){
     let row = document.createElement('tr');
     for(let j = 0; j<4; j++){
-      const input = document.createElement('input'); // Create an input element
-      input.type = 'number'; // You can change this to 'checkbox', 'radio', etc. if needed
+      const input = document.createElement('input'); 
+      // input.type = 'number'; 
       const cell = document.createElement('td')
       switch (true) {
         case (i === 0 && j === 0):
@@ -115,6 +115,7 @@ document.getElementById("addButton").addEventListener("click", function() {
           cell.textContent = document.getElementsByTagName("input")[1].value
           break;
         case (i === 0 && j === 3):
+          cell.textContent="Total";
           break;
         case (i === 1 && j === 0):
           cell.id = counter + "B" + j
@@ -143,8 +144,8 @@ document.getElementById("addButton").addEventListener("click", function() {
         case (i === 2 && j === 3):
           cell.appendChild(input); 
           break;
-
         case (i === 3 && j === 0):
+          cell.textContent="Total";
           break;
         case (i === 3 && j === 1):
           cell.textContent = 0;
@@ -166,7 +167,6 @@ document.getElementById("addButton").addEventListener("click", function() {
     table.appendChild(row);
   }
   inputContainer.appendChild(table);
-  inputs = document.querySelectorAll('input, textarea');
 }
 );
 
@@ -248,23 +248,41 @@ else if(y!=''&&n!=''&&t==''){
 
 function tableUpdates() {
   let id;
-  console.log("yo")
-  for(let i = 1; i<counter; i++){
+  let a, b, c, d, e, f;
+  for(let i = 0; i<counter; i++){
+    if(i!=0){
     id = (i+1)+"A"+1
-    document.getElementById(id).textContent=document.getElementsByTagName("input")[0].value
+    a=document.getElementsByTagName("input")[0].value
+    document.getElementById(id).textContent=a
     id = (i+1)+"A"+2
-    document.getElementById(id).textContent=document.getElementsByTagName("input")[1].value
+    b=document.getElementsByTagName("input")[1].value
+    document.getElementById(id).textContent=b
     id = (i+1)+"B"+0
-    document.getElementById(id).textContent=document.getElementsByTagName("input")[2].value
+    c=document.getElementsByTagName("input")[2].value
+    document.getElementById(id).textContent=c
     id = (i+1)+"C"+0
-    document.getElementById(id).textContent=document.getElementsByTagName("input")[6].value
+    d=document.getElementsByTagName("input")[6].value
+    document.getElementById(id).textContent=d
     id = (i+1)+"D"+1
-    document.getElementById(id).textContent=0+document.getElementsByTagName("input")[6*i+4].value+document.getElementsByTagName("input")[6*i+7].value
+    e=0+Number(document.getElementsByTagName("input")[6*i+4].value)+Number(document.getElementsByTagName("input")[6*i+7].value)
+    document.getElementById(id).textContent=e
     id = (i+1)+"D"+2
-    document.getElementById(id).textContent=0+document.getElementsByTagName("input")[6*i+5].value+document.getElementsByTagName("input")[6*i+8].value
+    f=0+Number(document.getElementsByTagName("input")[6*i+5].value)+Number(document.getElementsByTagName("input")[6*i+8].value)
+    document.getElementById(id).textContent=f   
+    }
+    else{
+      document.getElementById("1D1").textContent=Number(document.getElementsByTagName("input")[3].value)+Number(document.getElementsByTagName("input")[7].value);
+      document.getElementById("1D2").textContent=Number(document.getElementsByTagName("input")[4].value)+Number(document.getElementsByTagName("input")[8].value);
+    }
+    
+
   }
 }
 
-inputs.forEach(input => {
-  input.addEventListener('input', tableUpdates); // Trigger on 'input' change
+inputContainer.addEventListener('input', (event) => {
+  tableUpdates();
+})
+
+document.getElementById("recent").addEventListener('click', () => {
+  document.getElementById("history").style.display = 'flex'; // Use 'flex' to center the popup
 });
