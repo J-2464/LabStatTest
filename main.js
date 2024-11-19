@@ -283,6 +283,6 @@ inputContainer.addEventListener('input', (event) => {
   tableUpdates();
 })
 
-document.getElementById("recent").addEventListener('click', () => {
-  document.getElementById("history").style.display = 'flex'; // Use 'flex' to center the popup
-});
+// document.getElementById("recent").addEventListener('click', () => {
+//   document.getElementById("history").style.display = 'flex'; // Use 'flex' to center the popup
+// });

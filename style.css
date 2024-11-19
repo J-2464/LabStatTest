@@ -33,7 +33,7 @@ button {
     color:rgb(0, 0, 0); 
     font: old 84% 'trebuchet ms',helvetica,sans-serif; 
     background-image:linear-gradient(to top, rgb(255, 0, 0), rgb(214, 214, 214));
-    border:2px solid rgb(255, 255, 255); 
+    border:1px solid rgb(255, 255, 255); 
     margin: 4px 2px; 
     padding: 15px;
     cursor: pointer;
@@ -41,7 +41,7 @@ button {
     font-size:xx-large;
 }
 button:hover {
-    border: 2px solid black; /* Black outline on hover */
+    border: 1px solid black; /* Black outline on hover */
     outline: none; /* Remove default outline */
 }
 
@@ -52,8 +52,8 @@ input {
     border: none;
     box-shadow: none;
     font-size: large;
-    width: 160px;
-    height: 40px;
+    width: 180px;
+    height: 45px;
     text-align: center;
     -moz-appearance: textfield;  /* Firefox */
     -webkit-appearance: none;    /* Chrome, Safari, Edge */
