@@ -1,3 +1,77 @@
+.flexParent{
+    display: flex;
+    flex-wrap: wrap;  /* Allow items to wrap onto a new line */
+    justify-content: flex-start; /* Align items to the left */
+}
+
+#inputContainer{
+    font-family: 'Inter', sans-serif; /* Change to your desired font */
+    font-size: 18; /* Set the font size you want */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    position:relative;
+    width:50%;
+    /* margin: auto; */
+    margin-bottom: 80px;
+    left:15%
+}
+
+
+.history {
+    display: flex; /* Hidden by default */
+    position:absolute;
+    margin-top: 5px;
+    top: 0%;
+    right: 2.5%;
+    width: 20%;
+    background: rgb(255, 255, 255); /* Transparent black background */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;    border-color: black;
+    border: 2px solid;
+    border-radius: 20px;
+    /* height: 100%;
+    flex-wrap: wrap; */
+}
+
+.history > div{
+    align-items: center;
+    /* margin-top: 5px; */
+    justify-content: center;
+}
+
+#recentCalcs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* margin-top: 20px;
+    padding: 10px; */
+}
+
+#recentCalcs > div{
+    align-items: center;
+    margin-top: 10px;
+    justify-content: center;
+    text-align: center;
+}
+
+
+  @media (max-width: 768px) {
+    .history {
+display:none;
+    }
+    #inputContainer{
+        left:25%
+    }
+
+    .history {
+        margin-top: 20px; /* Add space above the history container when stacked */
+    }
+}
+  
 .controls {
     display: flex; flex-direction: row; align-items: center; justify-content: center;
         position: fixed; /* or stickt? */
@@ -6,34 +80,18 @@
         right: 0;
         padding: 10px;
 }
-.history {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 10%;
-    left: 25%;
-    right: 25%;
-    bottom: 10%;
-    background: rgb(255, 0, 0); /* Transparent black background */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    border-color: black;
-    border: 5px solid;
-    border-radius: 100px;
-}
 
 body {
     font-family: 'Inter', sans-serif; /* Change to your desired font */
-    font-size: 18px; /* Set the font size you want */
-    display: flex; flex-direction: row; align-items: center; justify-content: center;
-    margin-bottom: 80px;
+    font-size: large;
+
 }
 
 button { 
     color:rgb(0, 0, 0); 
     font: old 84% 'trebuchet ms',helvetica,sans-serif; 
-    background-image:linear-gradient(to top, rgb(255, 0, 0), rgb(214, 214, 214));
-    border:1px solid rgb(255, 255, 255); 
+    background-image:linear-gradient(to top, rgb(255, 0, 0), rgb(255, 200, 200));
+    border:2px solid rgb(255, 255, 255); 
     margin: 4px 2px; 
     padding: 15px;
     cursor: pointer;
@@ -41,7 +99,7 @@ button {
     font-size:xx-large;
 }
 button:hover {
-    border: 1px solid black; /* Black outline on hover */
+    border: 2px solid black; /* Black outline on hover */
     outline: none; /* Remove default outline */
 }
 
@@ -52,18 +110,19 @@ input {
     border: none;
     box-shadow: none;
     font-size: large;
-    width: 180px;
+    width: 140px;
     height: 45px;
+    border-radius: 1%;
     text-align: center;
     -moz-appearance: textfield;  /* Firefox */
     -webkit-appearance: none;    /* Chrome, Safari, Edge */
     appearance: none;            /* Standard */
 }
 input:hover {
-    outline: 1px solid #37393b;  /* Blue outline when input is focused */
+    outline: 2px solid #37393b;  /* Blue outline when input is focused */
 }
 input:focus {
-    outline: 2px solid #37393b;  /* Blue outline when input is focused */
+    outline: 4px solid #37393b;  /* Blue outline when input is focused */
 }
 table {
     border-color:inherit;
@@ -72,7 +131,7 @@ table {
 }
 
 table td {
-    width: 200px;
+    width: 180px;
     height: 50px;
     text-align: center;
     border: 1px solid;
@@ -82,3 +141,4 @@ table td {
     margin: 0; /* Remove default margin */
     display: inline-block; /* Adjust display to avoid extra space */
 }
+

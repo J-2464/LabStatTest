@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.1/jstat.min.js"></script>
+    <!-- <div>
+
+  </div> -->
+  <div class="flexParent" id="flexParent">
+
+      <div id="history" class="history">
+    Recent Calculations
+  <div id="recentCalcs"></div>
+  </div>
+
+  <div id="inputContainer">
+    <table>
+      <tr>
+          <td>Trial 1</td>
+          <td><input value="Outcome 1"/></td>
+          <td><input value="Outcome 2"/></td>
+          <td>Total</td>
+      </tr>
+      <tr>
+          <td><input value="Treatment 1"/></td>
+          <td><input /></td>
+          <td><input /></td>
+          <td><input /></td>
+      </tr>
+      <tr>
+          <td><input value="Treatment 2"/></td>
+          <td><input /></td>
+          <td><input /></td>
+          <td><input /></td>
+      </tr>
+      <tr>
+          <td>Total</td>
+          <td id="1D1">0</td>
+          <td id="1D2">0</td>
+          <td id="1D3">0</td>
+      </tr>
+  </table>
+    <!-- Trial 1 <br>
+    <input type="number" placeholder="True1A"/><input type="number" placeholder="False1A"/><input type="number" placeholder="Total1A"/>
+    <br>
+    <input type="number" placeholder="True1B"/><input type="number" placeholder="False1B"/><input type="number" placeholder="Total1B"/>
+  <br> -->
+    </div>
+
+
+  </div>
+
+  <div class="controls">
+  <button id="addButton" title="Add 1 Table">+</button>
+  <button id="subButton" title="Remove 1 Table">-</button><br>
+  <button id="AutoFill" title="Fills third input given any other two">Autofill</button>
+  <button id="calc" title="Compute P-value">Calculate</button><br>
+  <button id="clear" title="Clear all inputs">Clear</button>
+  <button id="recent" title="See past calculations">History</button>
+  </div>
+  <!-- to stop buttons grom covering iunputs -->
+  <br>  <br>  <br>  <br> 
+  <br>
+      <script type="text/javascript" src="./main.js"></script>
+  </body>
+</html>

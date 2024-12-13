@@ -7,8 +7,9 @@
 
 //   console.log(currentVal);
 // })
-let counter = 1
+let counter = 1;
 let history = [];
+let calculations = 0;
 //calculation
 document.getElementById("calc").addEventListener("click", function() {
   var pVal = 0;
@@ -58,15 +59,24 @@ for(let j = 0; j<counter; j++){
 pSum = Math.pow(Math.abs(pSum)-0.5,2);
 console.log(pSum)
 console.log(sSum)
-if(sSum==0||isNaN(sSum)){pVal="Undefined or Error"}
+if(sSum==0||isNaN(sSum)){pVal="Undefined or Error, Reivew inputs"}
 else{
 let almostDone = pSum/sSum;
 console.log(almostDone);
 pVal = 1-jStat.chisquare.cdf(almostDone, 1);
 history.push(pVal);
+RecentCalcs = document.getElementById("recentCalcs");
+var textNode = document.createElement('div');
+textNode.textContent = pVal;
+// var br = document.createElement("br");
+RecentCalcs.prepend(textNode);
+
+// RecentCalcs.appendChild(br);
 }
 console.log(pVal);
+
 alert(pVal);
+
 }
 )
 
@@ -156,6 +166,8 @@ document.getElementById("addButton").addEventListener("click", function() {
           cell.id = counter + "D" + j
           break;
         case (i === 3 && j === 3):
+          cell.textContent = 0;
+          cell.id = counter + "D" + j
           break;
 
         default:
@@ -211,7 +223,7 @@ document.getElementById("clear").addEventListener("click", function() {
   for(let i = 0; i<counter*6-6; i++){
   document.getElementsByTagName("input")[i+10].value='';
 }
-
+tableUpdates()
 
 })
 
@@ -269,10 +281,13 @@ function tableUpdates() {
     id = (i+1)+"D"+2
     f=0+Number(document.getElementsByTagName("input")[6*i+5].value)+Number(document.getElementsByTagName("input")[6*i+8].value)
     document.getElementById(id).textContent=f   
+    id = (i+1)+"D"+3
+    document.getElementById(id).textContent=e+f   
     }
     else{
       document.getElementById("1D1").textContent=Number(document.getElementsByTagName("input")[3].value)+Number(document.getElementsByTagName("input")[7].value);
       document.getElementById("1D2").textContent=Number(document.getElementsByTagName("input")[4].value)+Number(document.getElementsByTagName("input")[8].value);
+      document.getElementById("1D3").textContent=Number(document.getElementsByTagName("input")[4].value)+Number(document.getElementsByTagName("input")[8].value)+Number(document.getElementsByTagName("input")[3].value)+Number(document.getElementsByTagName("input")[7].value);
     }
     
 

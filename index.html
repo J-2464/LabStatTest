@@ -1,65 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.1/jstat.min.js"></script>
-    <div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .button {
+            padding: 15px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
 
-  </div>
+    <h1>Homepage</h1>
+    <p>Available Tools</p>
 
-  <div id="inputContainer">
-    <table>
-      <tr>
-          <td>Trial 1</td>
-          <td><input value="Outcome 1"/></td>
-          <td><input value="Outcome 2"/></td>
-          <td>Total</td>
-      </tr>
-      <tr>
-          <td><input value="Treatment 1"/></td>
-          <td><input type="number"/></td>
-          <td><input type="number"/></td>
-          <td><input type="number"/></td>
-      </tr>
-      <tr>
-          <td><input value="Treatment 2"/></td>
-          <td><input type="number"/></td>
-          <td><input type="number"/></td>
-          <td><input type="number"/></td>
-      </tr>
-      <tr>
-          <td>Total</td>
-          <td id="1D1">0</td>
-          <td id="1D2">0</td>
-          <td></td>
-      </tr>
-  </table>
-    <!-- Trial 1 <br>
-    <input type="number" placeholder="True1A"/><input type="number" placeholder="False1A"/><input type="number" placeholder="Total1A"/>
-    <br>
-    <input type="number" placeholder="True1B"/><input type="number" placeholder="False1B"/><input type="number" placeholder="Total1B"/>
-  <br> -->
-  </div>
-  <div class="controls">
-  <button id="addButton" title="Add 1 Table">+</button>
-  <button id="subButton" title="Remove 1 Table">-</button><br>
-  <button id="AutoFill" title="Fills third input given any other two">Autofill</button>
-  <button id="calc" title="Compute P-value">Calculate</button><br>
-  <button id="clear" title="Clear all inputs">Clear</button>
-  <button id="recent" title="See past calculations">History</button>
-  </div>
-  <div id="history" class="history">
-    Recent Calculations
-  </div>
-  <!-- to stop buttons grom covering iunputs -->
-  <br>  <br>  <br>  <br> 
-  <br>
-      <script type="text/javascript" src="./main.js"></script>
-  </body>
+    <button class="button" onclick="window.location.href='pValcalc.html';">pVal Calc</button>
+
+</body>
 </html>
