@@ -252,7 +252,7 @@ else if(y!=''&&n!=''&&t==''){
   n=n-0;
   document.getElementsByTagName("input")[i+2].value=y+n}
 }
-
+tableUpdates()
 
 })
 
