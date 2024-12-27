@@ -1,6 +1,7 @@
 // import jStat from 'jstat';
 // var input;
-
+const popup = document.querySelector('.calcPopup');
+const overlay = document.querySelector('.calcPopupOverlay');
 // input = document.getElementById("input")
 // input.addEventListener("input", (event) => {
 //   const currentVal = event.target.value;
@@ -12,6 +13,15 @@ let history = [];
 let calculations = 0;
 //calculation
 document.getElementById("calc").addEventListener("click", function() {
+  pvalCalc(0);
+}
+)
+document.getElementById("calcPlus").addEventListener("click", function() {
+    pvalCalc(1);
+}
+)
+
+function pvalCalc(plus){
   var pVal = 0;
   let primeroSum = [];
   let segundoSum = [];
@@ -72,14 +82,14 @@ textNode.textContent = pVal;
 RecentCalcs.prepend(textNode);
 
 // RecentCalcs.appendChild(br);
-}
 console.log(pVal);
 
-alert(pVal);
+if(plus!=0){calcPopup();return;}
 
 }
-)
 
+alert(pVal);
+}
 
 
 //add boxes button
@@ -298,6 +308,82 @@ inputContainer.addEventListener('input', (event) => {
   tableUpdates();
 })
 
-// document.getElementById("recent").addEventListener('click', () => {
-//   document.getElementById("history").style.display = 'flex'; // Use 'flex' to center the popup
-// });
+function calcPopup() {
+  var container = document.getElementById("calcPopupContent");
+  container.replaceChildren();
+showCalcPopup();
+  for(let count = 1; count<=counter; count++){
+    let table = document.createElement("table");
+    for(let i = 0; i<4; i++){
+      let row = document.createElement('tr')
+      for(let j = 0; j<5; j++){
+        const cell = document.createElement('td');
+        switch (true) {
+          //cases where you just copy the number, the "input 3x3"
+          case (i==1 && j>=1 && j<=3):
+            if(count==1){
+              cell.textContent = document.getElementsByTagName("input")[j+2].value;
+            }
+            else{
+              cell.textContent = document.getElementsByTagName("input")[5+count*4+j].value;
+            }
+            break;
+          case (i==2 && j>=1 && j<=3):
+            if(count==1){
+              cell.textContent = document.getElementsByTagName("input")[j+6].value;
+            }
+            else{
+              cell.textContent = document.getElementsByTagName("input")[7+count*4+j].value;
+            }
+            // cell.textContent = document.getElementById(counter + "C" + j).textContent;
+            break;
+          case (i==3 && j>=1 && j<=3):
+            cell.textContent = document.getElementById(count + "D" + j).textContent;
+            break;
+            //text cases
+            case (i === 0 && j === 0):
+              cell.textContent = "Trial " + count;
+              break;
+            case (i === 0 && j === 1):
+              cell.textContent = document.getElementsByTagName("input")[0].value
+                break;
+              case (i === 0 && j === 2):
+                  cell.textContent = document.getElementsByTagName("input")[1].value
+                  break;
+                case (i === 0 && j === 3):
+                    cell.textContent="Total";
+                    break;
+                  case (i === 1 && j === 0):
+                      cell.textContent = document.getElementsByTagName("input")[2].value
+                      break;
+                    case (i === 2 && j === 0):
+                        cell.textContent = document.getElementsByTagName("input")[6].value
+                        break;
+                      case (i === 3 && j === 0):
+                          cell.textContent="Total";
+                          break;
+              
+        }
+        row.appendChild(cell);
+      }
+      table.appendChild(row);
+    }
+    container.appendChild(table);
+    console.log("added");
+  }
+}
+
+function showCalcPopup() {
+  overlay.style.display = 'block';  
+  popup.style.display = 'flex';  
+  popup.style.pointerEvents = 'auto'; 
+}
+
+function hidePopup() {
+  popup.style.display = 'none';
+  overlay.style.display = 'none';  
+  popup.style.pointerEvents = 'none'; 
+}
+  
+tableUpdates();
+overlay.addEventListener('click', hidePopup);
