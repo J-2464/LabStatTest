@@ -90,31 +90,10 @@ if(plus!=0){calcPopup();return;}
 
 alert(pVal);
 }
-
-
-//add boxes button
-document.getElementById("addButton").addEventListener("click", function() {
+function addTable(){
   var inputContainer = document.getElementById("inputContainer");
   counter++;
-//   var text = "Trial " + counter
-//   let ph = ["True" + counter + "A", "False" + counter + "A", "Total" + counter + "A", "True" + counter + "B", "False" + counter + "B", "Total" + counter + "B"]
-//   inputContainer.append(text);
-//   for (var i = 0; i < 6; i++) {
-//       if (i%3 == 0) {
-//           var br = document.createElement("br");
-//           inputContainer.appendChild(br);
-//       }
-      
-//       var newInput = document.createElement("input");
-//       newInput.type = "number";
-//       newInput.placeholder = ph[i]
-//       inputContainer.appendChild(newInput);
-// }
-// var br = document.createElement("br");
-// inputContainer.appendChild(br);
   var table = document.createElement("table");
-  // const input = document.createElement('input'); 
-  // input.type = 'number';
   for(let i = 0; i<4; i++){
     let row = document.createElement('tr');
     for(let j = 0; j<4; j++){
@@ -190,14 +169,159 @@ document.getElementById("addButton").addEventListener("click", function() {
   }
   inputContainer.appendChild(table);
 }
+function subTable(){
+  if(counter>1){
+    var inputContainer = document.getElementById("inputContainer");
+    var tables = document.getElementsByTagName("table");
+    inputContainer.removeChild(tables[counter-1]);
+    counter--;
+inputs = document.querySelectorAll('input, textarea');
+}
+}
+function clearTables(){
+  document.getElementsByTagName("input")[3].value='';
+  document.getElementsByTagName("input")[4].value='';
+  document.getElementsByTagName("input")[5].value='';
+  document.getElementsByTagName("input")[7].value='';
+  document.getElementsByTagName("input")[8].value='';
+  document.getElementsByTagName("input")[9].value='';
+  for(let i = 0; i<counter*6-6; i++){
+  document.getElementsByTagName("input")[i+10].value='';
+}
+tableUpdates()
+}
+function autoFill(){
+  if(counter>1){
+    for(let i = 10; i<counter*6+4; i+=3){
+      let y = document.getElementsByTagName("input")[i].value
+      let n = document.getElementsByTagName("input")[i+1].value
+      let t = document.getElementsByTagName("input")[i+2].value
+    if(y==''&&n!=''&&t!=''){document.getElementsByTagName("input")[i].value=t-n}
+    else if(y!=''&&n==''&&t!=''){document.getElementsByTagName("input")[i+1].value=t-y}
+    else if(y!=''&&n!=''&&t==''){
+      y=y-0;
+      n=n-0;
+      document.getElementsByTagName("input")[i+2].value=y+n}
+  }}
+  for(let i=3; i<9; i+=4){
+    let y = document.getElementsByTagName("input")[i].value
+    let n = document.getElementsByTagName("input")[i+1].value
+    let t = document.getElementsByTagName("input")[i+2].value
+  if(y==''&&n!=''&&t!=''){document.getElementsByTagName("input")[i].value=t-n}
+  else if(y!=''&&n==''&&t!=''){document.getElementsByTagName("input")[i+1].value=t-y}
+  else if(y!=''&&n!=''&&t==''){
+    y=y-0;
+    n=n-0;
+    document.getElementsByTagName("input")[i+2].value=y+n}
+  }
+  tableUpdates()  
+}
+
+document.getElementById("addButton").addEventListener("click", function() {
+  addTable();
+// //   var text = "Trial " + counter
+// //   let ph = ["True" + counter + "A", "False" + counter + "A", "Total" + counter + "A", "True" + counter + "B", "False" + counter + "B", "Total" + counter + "B"]
+// //   inputContainer.append(text);
+// //   for (var i = 0; i < 6; i++) {
+// //       if (i%3 == 0) {
+// //           var br = document.createElement("br");
+// //           inputContainer.appendChild(br);
+// //       }
+      
+// //       var newInput = document.createElement("input");
+// //       newInput.type = "number";
+// //       newInput.placeholder = ph[i]
+// //       inputContainer.appendChild(newInput);
+// // }
+// // var br = document.createElement("br");
+// // inputContainer.appendChild(br);
+  
+//   // const input = document.createElement('input'); 
+//   // input.type = 'number';
+//   for(let i = 0; i<4; i++){
+//     let row = document.createElement('tr');
+//     for(let j = 0; j<4; j++){
+//       const input = document.createElement('input'); 
+//       // input.type = 'number'; 
+//       const cell = document.createElement('td')
+//       switch (true) {
+//         case (i === 0 && j === 0):
+//           cell.textContent = "Trial " + counter;
+//           cell.id = counter + "A" + j
+//           break;
+//         case (i === 0 && j === 1):
+//           cell.id = counter + "A" + j
+//           cell.textContent = document.getElementsByTagName("input")[0].value
+//           break;
+//         case (i === 0 && j === 2):
+//           cell.id = counter + "A" + j
+//           cell.textContent = document.getElementsByTagName("input")[1].value
+//           break;
+//         case (i === 0 && j === 3):
+//           cell.textContent="Total";
+//           break;
+//         case (i === 1 && j === 0):
+//           cell.id = counter + "B" + j
+//           cell.textContent = document.getElementsByTagName("input")[2].value
+//           break;
+//         case (i === 1 && j === 1):
+//           cell.appendChild(input); 
+//           break;
+//         case (i === 1 && j === 2):
+//           cell.appendChild(input); 
+//           break;
+//         case (i === 1 && j === 3):
+//           cell.appendChild(input); 
+//           break;
+
+//         case (i === 2 && j === 0):
+//           cell.id = counter + "C" + j
+//           cell.textContent = document.getElementsByTagName("input")[6].value
+//           break;
+//         case (i === 2 && j === 1):
+//           cell.appendChild(input); 
+//           break;
+//         case (i === 2 && j === 2):
+//           cell.appendChild(input); 
+//           break;
+//         case (i === 2 && j === 3):
+//           cell.appendChild(input); 
+//           break;
+//         case (i === 3 && j === 0):
+//           cell.textContent="Total";
+//           break;
+//         case (i === 3 && j === 1):
+//           cell.textContent = 0;
+//           cell.id = counter + "D" + j
+//           break;
+//         case (i === 3 && j === 2):
+//           cell.textContent = 0;
+//           cell.id = counter + "D" + j
+//           break;
+//         case (i === 3 && j === 3):
+//           cell.textContent = 0;
+//           cell.id = counter + "D" + j
+//           break;
+
+//         default:
+//           // Default case for other cells (not really necessary, all cases covered)
+//           cell.textContent = `Row ${i+1}, Col ${j+1}`;
+//       }
+//       row.appendChild(cell);
+//     }
+//     table.appendChild(row);
+//   }
+//   inputContainer.appendChild(table);
+}
 );
 
 document.getElementById("subButton").addEventListener("click", function() {
+  subTable();
 // alert("VIRUS INFECTED BY HNERY RUTGERS")
-if(counter>1){
-var inputContainer = document.getElementById("inputContainer");
-var tables = document.getElementsByTagName("table");
-inputContainer.removeChild(tables[counter-1]);
+// if(counter>1){
+// var inputContainer = document.getElementById("inputContainer");
+// var tables = document.getElementsByTagName("table");
+// inputContainer.removeChild(tables[counter-1]);
 // // Get all input elements within the container
 // var inputs = inputContainer.getElementsByTagName("input");
 // var breaks = inputContainer.getElementsByTagName("br");
@@ -218,51 +342,18 @@ inputContainer.removeChild(tables[counter-1]);
 //   }
 
 
-counter--;
-inputs = document.querySelectorAll('input, textarea');
-}
+// counter--;
+// inputs = document.querySelectorAll('input, textarea');
+// }
 });
 
 document.getElementById("clear").addEventListener("click", function() {
-  document.getElementsByTagName("input")[3].value='';
-  document.getElementsByTagName("input")[4].value='';
-  document.getElementsByTagName("input")[5].value='';
-  document.getElementsByTagName("input")[7].value='';
-  document.getElementsByTagName("input")[8].value='';
-  document.getElementsByTagName("input")[9].value='';
-  for(let i = 0; i<counter*6-6; i++){
-  document.getElementsByTagName("input")[i+10].value='';
-}
-tableUpdates()
-
+clearTables();
 })
 
 
 document.getElementById("AutoFill").addEventListener("click", function() {
-  if(counter>1){
-  for(let i = 10; i<counter*6+4; i+=3){
-    let y = document.getElementsByTagName("input")[i].value
-    let n = document.getElementsByTagName("input")[i+1].value
-    let t = document.getElementsByTagName("input")[i+2].value
-  if(y==''&&n!=''&&t!=''){document.getElementsByTagName("input")[i].value=t-n}
-  else if(y!=''&&n==''&&t!=''){document.getElementsByTagName("input")[i+1].value=t-y}
-  else if(y!=''&&n!=''&&t==''){
-    y=y-0;
-    n=n-0;
-    document.getElementsByTagName("input")[i+2].value=y+n}
-}}
-for(let i=3; i<9; i+=4){
-  let y = document.getElementsByTagName("input")[i].value
-  let n = document.getElementsByTagName("input")[i+1].value
-  let t = document.getElementsByTagName("input")[i+2].value
-if(y==''&&n!=''&&t!=''){document.getElementsByTagName("input")[i].value=t-n}
-else if(y!=''&&n==''&&t!=''){document.getElementsByTagName("input")[i+1].value=t-y}
-else if(y!=''&&n!=''&&t==''){
-  y=y-0;
-  n=n-0;
-  document.getElementsByTagName("input")[i+2].value=y+n}
-}
-tableUpdates()
+  autoFill();
 
 })
 
@@ -312,8 +403,9 @@ function calcPopup() {
   var container = document.getElementById("calcPopupContent");
   container.replaceChildren();
 showCalcPopup();
-  for(let count = 1; count<=counter; count++){
+  for(var count = 1; count<=counter; count++){
     let table = document.createElement("table");
+    //i is row j is column
     for(let i = 0; i<4; i++){
       let row = document.createElement('tr')
       for(let j = 0; j<5; j++){
@@ -325,7 +417,7 @@ showCalcPopup();
               cell.textContent = document.getElementsByTagName("input")[j+2].value;
             }
             else{
-              cell.textContent = document.getElementsByTagName("input")[5+count*4+j].value;
+              cell.textContent = document.getElementsByTagName("input")[3+(count-1)*6+j].value;
             }
             break;
           case (i==2 && j>=1 && j<=3):
@@ -333,7 +425,7 @@ showCalcPopup();
               cell.textContent = document.getElementsByTagName("input")[j+6].value;
             }
             else{
-              cell.textContent = document.getElementsByTagName("input")[7+count*4+j].value;
+              cell.textContent = document.getElementsByTagName("input")[6+(count-1)*6+j].value;
             }
             // cell.textContent = document.getElementById(counter + "C" + j).textContent;
             break;
@@ -347,22 +439,23 @@ showCalcPopup();
             case (i === 0 && j === 1):
               cell.textContent = document.getElementsByTagName("input")[0].value
                 break;
-              case (i === 0 && j === 2):
+            case (i === 0 && j === 2):
                   cell.textContent = document.getElementsByTagName("input")[1].value
                   break;
-                case (i === 0 && j === 3):
+            case (i === 0 && j === 3):
                     cell.textContent="Total";
                     break;
-                  case (i === 1 && j === 0):
+            case (i === 1 && j === 0):
                       cell.textContent = document.getElementsByTagName("input")[2].value
                       break;
-                    case (i === 2 && j === 0):
+            case (i === 2 && j === 0):
                         cell.textContent = document.getElementsByTagName("input")[6].value
                         break;
-                      case (i === 3 && j === 0):
+            case (i === 3 && j === 0):
                           cell.textContent="Total";
                           break;
-              
+            case (i==0 && j==4): cell.textContent = document.getElementsByTagName("input")[0].value + " / Total";
+                          break;              
         }
         row.appendChild(cell);
       }
@@ -387,3 +480,102 @@ function hidePopup() {
   
 tableUpdates();
 overlay.addEventListener('click', hidePopup);
+
+
+var fileInput = document.getElementById("xInput");
+fileInput.addEventListener('change', function(event) {
+  var file = fileInput.files[0];
+
+  // Check if the file is an Excel file (XLSX)
+  var validFile = file && (file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.name.toLowerCase().endsWith('.xlsx') || file.name.toLowerCase().endsWith('.csv'));
+  if (validFile) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var data = e.target.result;
+    var workbook = XLSX.read(data, {type: 'binary'});
+    var sheetName = workbook.SheetNames[0];
+    var worksheet = workbook.Sheets[sheetName];
+
+    // Get the range of the sheet (e.g., "A1:C3")
+    var range = worksheet['!ref'];
+    var startRow = range.split(':')[0].match(/\d+/)[0]; // Extract the starting row number
+    var endRow = range.split(':')[1].match(/\d+/)[0]; // Extract the ending row number
+    var startCol = range.split(':')[0].match(/[A-Za-z]+/)[0]; // Extract the starting column
+    var endCol = range.split(':')[1].match(/[A-Za-z]+/)[0]; // Extract the ending column
+
+    console.log('Number of rows:', endRow - startRow + 1);
+
+    // Function to convert Excel column (e.g., "A", "B", "C", ...) to a 0-based index
+    function colToIndex(col) {
+      let index = 0;
+      let length = col.length;
+      for (let i = 0; i < length; i++) {
+        index = index * 26 + (col.charCodeAt(i) - 'A'.charCodeAt(0) + 1);
+      }
+      return index - 1; // Adjust for 0-based index
+    }
+
+    // Convert columns from letters to numbers
+    var startColIndex = colToIndex(startCol);
+    var endColIndex = colToIndex(endCol);
+
+    var sheetData = [];
+    for (var row = startRow; row <= endRow; row++) {
+      var rowData = [];
+      for (var colIndex = startColIndex; colIndex <= endColIndex; colIndex++) {
+        var colLetter = String.fromCharCode('A'.charCodeAt(0) + colIndex); // Convert index to letter
+        var cellAddress = colLetter + row;
+        if (worksheet[cellAddress]) {
+          rowData.push(worksheet[cellAddress].v); // Add the cell value to the rowData array
+        } else {
+          rowData.push(null); // In case the cell is empty
+        }
+      }
+      sheetData.push(rowData); // Add the rowData to the sheetData array
+    }
+
+//actual work heer
+
+//get right amont of tables
+let tables = (sheetData.length-1)/4;
+while(tables!=counter){
+  if(tables>counter){addTable();}
+  else{subTable();}
+}
+clearTables();
+document.getElementsByTagName("input")[0].value = sheetData[1][2];
+document.getElementsByTagName("input")[1].value = sheetData[2][2];
+document.getElementsByTagName("input")[2].value = sheetData[1][1];
+document.getElementsByTagName("input")[6].value = sheetData[3][1];
+let dataCol = 3;
+let pos = 10;
+for(let i = 1; i<=tables*4; i++){
+  if(i==1){
+    document.getElementsByTagName("input")[3].value = sheetData[i][dataCol];
+  }
+  else if(i==2){
+    document.getElementsByTagName("input")[4].value = sheetData[i][dataCol];
+  }
+  else if(i==3){
+    document.getElementsByTagName("input")[7].value = sheetData[i][dataCol];
+  }
+  else if(i==4){
+    document.getElementsByTagName("input")[8].value = sheetData[i][dataCol];
+  }
+  else{
+    
+    document.getElementsByTagName("input")[pos].value = sheetData[i][dataCol];
+    pos++;
+    if(i%2==0){pos++};
+  }
+}
+
+autoFill();
+tableUpdates();
+
+
+  };
+  reader.readAsBinaryString(fileInput.files[0]);
+}
+else { alert("Not Valid File Type")}
+});

@@ -9,6 +9,7 @@
   </head>
   <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.1/jstat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
     <!-- <div>
 
   </div> -->
@@ -56,6 +57,16 @@
 
   </div>
 
+
+
+  <div class="calcPopupOverlay"></div>
+  <div id="calcPopup" class="calcPopup">
+    <h2>Calculation Result</h2>
+    <div id="calcPopupContent" class="calcPopupContent">
+    
+    </div>
+  </div>
+
   <div class="controls">
   <button id="addButton" title="Add 1 Table">+</button>
   <button id="subButton" title="Remove 1 Table">-</button>
@@ -63,16 +74,10 @@
   <button id="calc" title="Compute P-value">QuickCalc</button>
   <button id="calcPlus" title="Show Extra Information">Calculate</button>
   <button id="clear" title="Clear all inputs">Clear</button>
+  <input type="file" id="xInput"/>
   <!-- <button id="recent" title="See past calculations">History</button> -->
   </div>
 
-  <div class="calcPopupOverlay"></div>
-  <div id="calcPopup" class="calcPopup">
-    <h2>Calculation Result</h2>
-    <div id="calcPopupContent" class="calcPopupContent">
-    
-  </div>
-  </div>
   <!-- to stop buttons grom covering iunputs -->
   <br>  <br>  <br>  <br> 
   <br>
