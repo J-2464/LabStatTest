@@ -11,6 +11,7 @@ const overlay = document.querySelector('.calcPopupOverlay');
 let counter = 1;
 let history = [];
 let calculations = 0;
+var pVal
 //calculation
 document.getElementById("calc").addEventListener("click", function() {
   pvalCalc(0);
@@ -22,7 +23,7 @@ document.getElementById("calcPlus").addEventListener("click", function() {
 )
 
 function pvalCalc(plus){
-  var pVal = 0;
+  pVal = 0;
   let primeroSum = [];
   let segundoSum = [];
   let pSum = 0;
@@ -579,3 +580,69 @@ tableUpdates();
 }
 else { alert("Not Valid File Type")}
 });
+
+function downloadExcel(){
+  const outTable = [];
+
+  //trial col
+  for(let i = 0; i<counter*4+1; i++){
+    outTable[i] = [];
+    if(i==0){outTable[i][0]="Trial"; continue;}
+    outTable[i][0]="Trial " + (Math.floor((i-1)/4)+1);
+  }
+  //treat col
+  for(let i = 0; i<counter*4+1; i++){
+    
+    if(i==0){outTable[i][1]="Treatment"; continue;}
+    let treatA, treatB;
+    treatA = document.getElementsByTagName('input')[2].value;
+    treatB = document.getElementsByTagName('input')[6].value;
+
+    if(i%3==0||i%4==0){
+      outTable[i][1]=treatB;
+    }
+    else{
+      outTable[i][1]=treatA
+    }
+    
+  }
+  //out col
+  for(let i = 0; i<counter*4+1; i++){
+    
+    if(i==0){outTable[i][2]="Outcome"; continue;}
+    let outA, outB;
+    outA = document.getElementsByTagName('input')[0].value;
+    outB = document.getElementsByTagName('input')[1].value;
+
+    if(i%2==1){
+      outTable[i][2]=outA;
+    }
+    else{
+      outTable[i][2]=outB
+    }
+    
+  }
+//result col
+let headStart = 10;
+  for(let i = 0; i<counter*4+1; i++){
+    
+    if(i==0){outTable[i][3]="Result"; continue;}
+    if(i==1){outTable[i][3]=document.getElementsByTagName('input')[3].value;}
+    else if (i==2){outTable[i][3]=document.getElementsByTagName('input')[4].value;}
+    else if (i==3){outTable[i][3]=document.getElementsByTagName('input')[7].value;}
+    else if (i==4){outTable[i][3]=document.getElementsByTagName('input')[8].value;}
+    else {outTable[i][3]=document.getElementsByTagName('input')[headStart].value; headStart++; if(i%2==0){headStart++}}
+  }
+
+  outTable[0][4] = "pVal: " + pVal;
+
+
+  //arr to xl
+  const ws = XLSX.utils.aoa_to_sheet(outTable);
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+  XLSX.writeFile(wb, "output.xlsx");
+
+}
