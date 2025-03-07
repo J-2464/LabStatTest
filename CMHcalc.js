@@ -401,6 +401,7 @@ inputContainer.addEventListener('input', (event) => {
 })
 
 function calcPopup() {
+  autoFill();
   var container = document.getElementById("calcPopupContent");
   container.replaceChildren();
 showCalcPopup();
@@ -456,7 +457,28 @@ showCalcPopup();
                           cell.textContent="Total";
                           break;
             case (i==0 && j==4): cell.textContent = document.getElementsByTagName("input")[0].value + " / Total";
-                          break;              
+                          break;     
+            case (i==1 && j==4): 
+            if(count==1){
+              cell.textContent = document.getElementsByTagName("input")[j-1].value/document.getElementsByTagName("input")[j+1].value
+            }
+            else{
+              cell.textContent = document.getElementsByTagName("input")[3+(count-1)*6+j-3].value/document.getElementsByTagName("input")[3+(count-1)*6+j-1].value;
+            }
+            break;
+            case (i==2 && j==4): 
+            if(count==1){
+              cell.textContent = document.getElementsByTagName("input")[j+3].value/document.getElementsByTagName("input")[j+5].value
+            }
+            else{
+              cell.textContent = document.getElementsByTagName("input")[6+(count-1)*6+j-3].value/document.getElementsByTagName("input")[6+(count-1)*6+j-1].value;
+            }
+            break;
+            case(i==3&&j==4):
+            {
+              cell.textContent = Number(document.getElementById(count + "D" + 1).textContent)/Number(document.getElementById(count + "D" + 3).textContent)
+            }
+            break;
         }
         row.appendChild(cell);
       }
