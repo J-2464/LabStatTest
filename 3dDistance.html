@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+  </head>
+  <body>
+    <h4>Upload file with points</h4>
+
+User Guide: <br> 
+Upload file (any format acceptable). If a line in the file has three numbers at the end it will be considered a point <br>
+e.g "H 1 2 3" is point (1,2,3). Same for "daadadada qwerty 1 2 3"
+<br>
+<br>
+<input type="file" id="fileInput">
+<br>
+
+Alternative Text Input <textarea id="textInput"></textarea> <button id="textInputButton">Evaluate Text Input</button>
+<h5>Results</h5>
+<div id="results"></div>
+  </body>
+            <script src="./3dDistance.js"></script>
+
+  </html>
