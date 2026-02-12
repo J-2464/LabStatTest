@@ -3,33 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Homepage - Calculator Tools</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .button {
-            padding: 15px 25px;
-            background-color: #4CAF50;
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .tools-intro {
+            font-size: 1.1rem;
+            color: #34495e;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 25px 25px 15px;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-description {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        
+        .card-features {
+            margin-bottom: 25px;
+        }
+        
+        .card-features h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .card-features ul {
+            padding-left: 20px;
+            color: #666;
+        }
+        
+        .card-features li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .button-container {
+            padding: 0 25px 25px;
+        }
+        
+        .tool-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, #2ecc71, #27ae60);
             color: white;
             border: none;
-            font-size: 18px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
         }
-        .button:hover {
-            background-color: #45a049;
+        
+        .tool-button:hover {
+            background: linear-gradient(to right, #27ae60, #219653);
+            box-shadow: 0 7px 20px rgba(46, 204, 113, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .tool-button:active {
+            transform: translateY(1px);
+        }
+        
+        .distance-button {
+            background: linear-gradient(to right, #9b59b6, #8e44ad);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
+        }
+        
+        .distance-button:hover {
+            background: linear-gradient(to right, #8e44ad, #7d3c98);
+            box-shadow: 0 7px 20px rgba(155, 89, 182, 0.4);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Calculator Tools</h1>
+            <p class="subtitle">A collection of specialized calculators for data analysis</p>
+            <p class="tools-intro">Select a calculator below to perform specific statistical and mathematical calculations. Each tool is designed to simplify complex computations with an intuitive interface.</p>
+        </header>
+        
+        <div class="tools-grid">
+            <!-- CMH Calculator Card -->
+            <div class="tool-card">
+                <div class="card-header">
+                    <h2>CMH Calculator</h2>
+                    <p>Cochran-Mantel-Haenszel Statistics</p>
+                </div>
+                
+                <div class="card-body">
+                    <p class="card-description">
+                        The Cochran-Mantel-Haenszel calculator is used to analyze the association between two binary variables, while controlling for one or more confounding variables. This is particularly useful in stratified analysis.
+                    </p>
+                    
+                    <div class="card-features">
+                        <h3>Key Features:</h3>
+                        <ul>
+                            <li>Calculate CMH common odds ratio estimate</li>
+                            <li>Compute Mantel-Haenszel statistics</li>
+                            <li>Stratified analysis with multiple layers</li>
+                            <li>Confidence interval calculation</li>
+                            <li>Export results for reporting</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="button-container">
+                    <button class="tool-button" onclick="window.location.href='CMHcalc.html';">Open CMH Calculator</button>
+                </div>
+            </div>
+            
+            <!-- Pairwise Distance Calculator Card -->
+            <div class="tool-card">
+                <div class="card-header">
+                    <h2>Pairwise Distance Calculator</h2>
+                    <p>3D Distance Calculations</p>
+                </div>
+                
+                <div class="card-body">
+                    <p class="card-description">
+                        Calculate Euclidean distances between multiple points in three-dimensional space. This tool is ideal for spatial analysis, molecular modeling, or any application requiring precise distance measurements in 3D.
+                    </p>
+                    
+                    <div class="card-features">
+                        <h3>Key Features:</h3>
+                        <ul>
+                            <li>Calculate distances between multiple 3D points</li>
+                            <li>Support for batch processing of point pairs</li>
+                            <li>Visual representation of points in space</li>
+                            <li>Export distance matrix for further analysis</li>
+                            <li>Customizable coordinate input formats</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="button-container">
+                    <button class="tool-button distance-button" onclick="window.location.href='3dDistance.html';">Open Distance Calculator</button>
+                </div>
+            </div>
+            
+            <!-- Additional Tool Card (example) -->
+            <div class="tool-card">
+                <div class="card-header">
+                    <h2>Statistical Power Calculator</h2>
+                    <p>Sample Size & Power Analysis</p>
+                </div>
+                
+                <div class="card-body">
+                    <p class="card-description">
+                        Determine the appropriate sample size for your study or calculate statistical power for existing data. This tool helps researchers design more effective studies and interpret results accurately.
+                    </p>
+                    
+                    <div class="card-features">
+                        <h3>Key Features:</h3>
+                        <ul>
+                            <li>Calculate sample size for various tests</li>
+                            <li>Power analysis for t-tests, ANOVA, and more</li>
+                            <li>Effect size estimation</li>
+                            <li>Interactive power curves</li>
+                            <li>Save and export analysis parameters</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="button-container">
+                    <button class="tool-button" onclick="alert('This is a demo tool. Implementation would require additional development.');">Coming Soon</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Calculator Tools v1.0 | Designed for researchers and data analysts</p>
+            <p>All calculations are performed locally in your browser for privacy.</p>
+        </footer>
+    </div>
 
-    <h1>Homepage</h1>
-    <p>Available Tools</p>
-
-    <button class="button" onclick="window.location.href='CMHcalc.html';">CMH Calculator</button>
-    <button class="button" onclick="window.location.href='3dDistance.html';">Pairwise Distance Calculator</button>
+    <script>
+        // Add subtle animation to cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
 </body>
 </html>

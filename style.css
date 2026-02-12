@@ -14,7 +14,7 @@
     position:relative;
     width:50%;
     /* margin: auto; */
-    margin-bottom: 80px;
+    /* margin-bottom: 80px; */
     left:15%
 }
 
@@ -72,14 +72,41 @@ display:none;
     }
 }
   
-.controls {
+/* .controls {
     display: flex; flex-direction: row; align-items: center; justify-content: center;
-        position: fixed; /* or stickt? */
+        position: fixed; 
         bottom: 0;
         left: 0;
         right: 0;
         padding: 10px;
+} */
+
+/* .controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+} */
+
+.controls {
+    display: flex; flex-direction: row; align-items: center; justify-content: center;
+    position: sticky;
+    bottom: 0;
+    top: auto;
+    transition: all 0.3s ease;
+    background: white;
 }
+
+
 
 .calcPopup {
     display: none;
@@ -140,19 +167,24 @@ display:none;
 body {
     font-family: 'Inter', sans-serif; /* Change to your desired font */
     font-size: large;
-
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 button { 
     color:rgb(0, 0, 0); 
     font: old 84% 'trebuchet ms',helvetica,sans-serif; 
     background-image:linear-gradient(to top, rgb(255, 0, 0), rgb(255, 200, 200));
-    border:2px solid rgb(255, 255, 255); 
+    /* border:2px solid rgb(255, 255, 255);  */
     margin: 4px 2px; 
     padding: 15px;
     cursor: pointer;
     border-radius: 50%;
     font-size:xx-large;
+    outline: none
 }
 button:hover {
     border: 2px solid black; /* Black outline on hover */
@@ -205,7 +237,7 @@ table td {
     color:rgb(0, 0, 0); 
     font: old 84% 'trebuchet ms',helvetica,sans-serif; 
     background-image:linear-gradient(to top, rgb(255, 0, 0), rgb(255, 200, 200));
-    border:2px solid rgb(255, 255, 255); 
+    /* border:2px solid rgb(255, 255, 255);  */
     margin: 4px 2px; 
     padding: 15px;
     cursor: pointer;
@@ -216,3 +248,90 @@ table td {
     border: 2px solid black; /* Black outline on hover */
     outline: none; /* Remove default outline */
 }
+
+
+footer {
+            background-color: #000000; /* Dark red */
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            /* position: relative; */
+        }
+
+
+        .footer-content {
+            /* max-width: 1200px; */
+            /* margin: 0 auto; */
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            /* margin-bottom: 1.5rem; */
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+/* 
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        } */
+         main{
+            margin: 5px;
+            flex: 1
+         }
+
+
+        header {
+            background-color: #8B0000; /* Dark red */
+            color: white;
+            padding: 1rem 2rem;
+            /* position: fixed; */
+            top: 0;
+            left: 0;
+            /* width: 100%; */
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            /* height:5% */
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
