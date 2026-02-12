@@ -1,3 +1,8 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+
+
 document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -8,7 +13,9 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             const content = e.target.result;
             const points = parse3DPoints(content);
             let dist = minPWDist(points);
-            // alert (dist)
+            displayPoints(points, dist);
+            print('hi')
+            alert (dist)
              document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
             + " <br> Between points " + dist[1] + " and " +dist[2]
                         
@@ -79,11 +86,11 @@ function parse3DPoints(content) {
 function minPWDist(points) {
     let minDist = []
     minDist[0]=distance(points[0],points[1]);
-    minDist[1]=0
-    minDist[2]=1
+    minDist[1]=1
+    minDist[2]=2
     for(let i = 0; i<points.length; i++){
         for(let j = i+1; j<points.length; j++){
-            dist = distance(points[i],points[j])
+            let dist = distance(points[i],points[j])
             if(dist<minDist[0]){
                 minDist[0]=dist
                 minDist[1]=i+1
@@ -107,8 +114,98 @@ document.getElementById("textInputButton").addEventListener("click", function() 
             const content = document.getElementById('textInput').value
             const points = parse3DPoints(content);
             let dist = minPWDist(points);
+            displayPoints(points, dist);
             // alert (dist)
             document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
             + " <br> Between points " + dist[1] + " and " +dist[2]
 
 });
+
+
+
+
+
+
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('white');
+
+const canvas = document.querySelector('#bg');
+const renderer = new THREE.WebGLRenderer({ 
+    canvas: canvas,
+    antialias: true 
+});
+
+renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientHeight,
+    0.5,
+    1000
+);
+
+// OrbitControls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+camera.position.set(0, 5, 0);
+controls.update();
+
+
+        var ambientLight = new THREE.AmbientLight(0xaaaaaa, 1)
+        scene.add(ambientLight)
+
+        var pointLight = new THREE.PointLight(0xFFD700, 8, 100, 1)
+        scene.add(pointLight)
+
+
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    pointLight.position.copy(camera.position);
+    renderer.render(scene, camera);
+}
+animate();
+
+
+
+
+window.addEventListener('resize', () => {
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+});
+
+let currentDisplay = []
+
+function displayPoints(points, minDist){
+
+    for(let i = 0; i<currentDisplay.length; i++){
+        scene.remove(currentDisplay[i])
+    }
+    currentDisplay = []
+
+    console.log(minDist)
+    let pointGeo = new THREE.SphereGeometry(minDist[0]/2, 32)
+    let pointMesh = new THREE.MeshPhongMaterial({ color: 0xffff00 }); // yellow
+    let minDistMesh = new THREE.MeshPhongMaterial({ color: 0xff0000 }); // Red
+    let OGsphere = new THREE.Mesh(pointGeo, pointMesh)
+    let specialSphere = new THREE.Mesh(pointGeo, minDistMesh)
+    for(let i = 0; i<points.length; i++){
+
+        let sphere
+        if(i==minDist[1]-1||i==minDist[2]-1){
+            sphere = specialSphere.clone() 
+            console.log(i)
+        }
+        else{
+  
+            sphere = OGsphere.clone()
+        }
+        sphere.position.set(points[i][0],points[i][1],points[i][2])
+        scene.add(sphere)
+        currentDisplay.push(sphere)
+    }
+}
