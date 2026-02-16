@@ -1,6 +1,5 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.160.0';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
+import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
 
 document.getElementById('fileInput').addEventListener('change', function(event) {
