@@ -1,5 +1,6 @@
 import * as THREE from 'https://esm.sh/three@0.160.0';
 import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+import { preloadedData } from './preload';
 
 document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
@@ -9,16 +10,17 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
     reader.onload = function(e) {
         try {
             const content = e.target.result;
-            const points = parse3DPoints(content);
-            let dist = minPWDist(points);
-            displayPoints(points, dist);
-            print('hi')
-            alert (dist)
-             document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
-            + " <br> Between points " + dist[1] + " and " +dist[2]
+            process(content)
+            // const points = parse3DPoints(content);
+            // let dist = minPWDist(points);
+            // displayPoints(points, dist);
+            // print('hi')
+            // alert (dist)
+            //  document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
+            // + " <br> Between points " + dist[1] + " and " +dist[2]
                         
-            console.log('Parsed points:', points);
-            console.log(`Found ${points.length} points`);
+            // console.log('Parsed points:', points);
+            // console.log(`Found ${points.length} points`);
             
             // Display results
             // document.getElementById('output').innerHTML = `
@@ -110,17 +112,25 @@ function distance(pointA, pointB){
 
 document.getElementById("textInputButton").addEventListener("click", function() {
             const content = document.getElementById('textInput').value
-            const points = parse3DPoints(content);
-            let dist = minPWDist(points);
-            displayPoints(points, dist);
-            // alert (dist)
-            document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
-            + " <br> Between points " + dist[1] + " and " +dist[2]
+            process(content)
+            // const points = parse3DPoints(content);
+            // let dist = minPWDist(points);
+            // displayPoints(points, dist);
+            // // alert (dist)
+            // document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
+            // + " <br> Between points " + dist[1] + " and " +dist[2]
 
 });
 
 
-
+function process(content){
+    const points = parse3DPoints(content);
+    let dist = minPWDist(points);
+    displayPoints(points, dist);
+    // alert (dist)
+    document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
+    + " <br> Between points " + dist[1] + " and " +dist[2]
+}
 
 
 
@@ -155,7 +165,7 @@ controls.update();
         var ambientLight = new THREE.AmbientLight(0xaaaaaa, 1)
         scene.add(ambientLight)
 
-        var pointLight = new THREE.PointLight(0xFFD700, 8, 100, 1)
+        var pointLight = new THREE.PointLight(0xFFD700, 3.5, 100, .25)
         scene.add(pointLight)
 
 
@@ -167,13 +177,52 @@ function animate() {
 }
 animate();
 
+function addCustomAxes(scene, size = 100) {
+    const materialX = new THREE.LineBasicMaterial({ color: 0xff0000 }); // Red
+    const materialY = new THREE.LineBasicMaterial({ color: 0x00ff00 }); // Green
+    const materialZ = new THREE.LineBasicMaterial({ color: 0x0000ff }); // Blue
+
+    // X-Axis
+    const geoX = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(-size, 0, 0),
+        new THREE.Vector3(size, 0, 0)
+    ]);
+    const lineX = new THREE.Line(geoX, materialX);
+
+    // Y-Axis
+    const geoY = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0, -size, 0),
+        new THREE.Vector3(0, size, 0)
+    ]);
+    const lineY = new THREE.Line(geoY, materialY);
+
+    // Z-Axis
+    const geoZ = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0, 0, -size),
+        new THREE.Vector3(0, 0, size)
+    ]);
+    const lineZ = new THREE.Line(geoZ, materialZ);
+
+    scene.add(lineX, lineY, lineZ);
+}
+
+// Usage:
+addCustomAxes(scene, 500);
 
 
 
 window.addEventListener('resize', () => {
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    // Get the size of the window (or a wrapper div if you have one)
+    const width = window.innerWidth * 0.98; // Matching your 98vw
+    const height = 500; // Keep your fixed height if you prefer, or window.innerHeight * 0.5
+
+    // Update Camera
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+    // Update Renderer
+    // The "false" at the end prevents Three.js from fighting with your CSS width
+    renderer.setSize(width, height, false);
 });
 
 let currentDisplay = []
@@ -207,3 +256,7 @@ function displayPoints(points, minDist){
         currentDisplay.push(sphere)
     }
 }
+
+
+
+// process(preloadedData[85].coords)
