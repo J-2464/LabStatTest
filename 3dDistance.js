@@ -1,46 +1,64 @@
 import * as THREE from 'https://esm.sh/three@0.160.0';
 import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 import { preloadedData } from './preload.js';
+import { rho2structs } from './coords.js';
 
-document.getElementById('fileInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+const inputBox = document.getElementById("textInput");
+const dropdown = document.getElementById("moleculeDropdown");
+const sizeSlider = document.getElementById("sizeSlider");
+
+for (let i = 5; i <= 147; i++) {
+  // Create a new <option> element
+  const newOption = document.createElement("option");
+  
+  // Set the background value and the visible text
+  newOption.value = i; 
+  newOption.textContent = `${i}`; 
+  
+  // Add it to the dropdown menu
+  dropdown.appendChild(newOption);
+}
+
+// document.getElementById('fileInput').addEventListener('change', function(event) {
+//     const file = event.target.files[0];
+//     if (!file) return;
     
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const content = e.target.result;
-            process(content)
-            // const points = parse3DPoints(content);
-            // let dist = minPWDist(points);
-            // displayPoints(points, dist);
-            // print('hi')
-            // alert (dist)
-            //  document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
-            // + " <br> Between points " + dist[1] + " and " +dist[2]
-                        
-            // console.log('Parsed points:', points);
-            // console.log(`Found ${points.length} points`);
-            
-            // Display results
-            // document.getElementById('output').innerHTML = `
-            //     <p>Successfully parsed ${points.length} points</p>
-            //     <pre>${JSON.stringify(points, null, 2)}</pre>
-            // `;
-            
-        } catch (error) {
-            console.error('Error parsing file:', error);
-            document.getElementById('output').innerHTML = 
-                `<p style="color: red;">Error: ${error.message}</p>`;
-        }
-    };
+//     const reader = new FileReader();
+//     reader.onload = function(e) {
+//         try {
+//             const content = e.target.result;
+//             process(content)
+ 
+//         } catch (error) {
+//             console.error('Error parsing file:', error);
+//             document.getElementById('output').innerHTML = 
+//                 `<p style="color: red;">Error: ${error.message}</p>`;
+//         }
+//     };
     
-    reader.onerror = function() {
-        console.error('Error reading file');
-    };
+//     reader.onerror = function() {
+//         console.error('Error reading file');
+//     };
     
-    reader.readAsText(file);
+//     reader.readAsText(file);
+// });
+
+
+dropdown.addEventListener("change", (event) => {
+  // Get the value the user just selected
+  const selectedValue = event.target.value;
+  
+  // Make sure they didn't just select the "Choose a structure..." placeholder
+  if (selectedValue !== "") {
+    console.log(`User selected number: ${selectedValue}`);
+    
+    inputBox.value = rho2structs[Number(selectedValue)]
+
+  } else {
+    outputMessage.textContent = ""; // Clear the message if they unselect
+  }
 });
+
 
 function parse3DPoints(content) {
     const lines = content.split('\n');
@@ -88,16 +106,27 @@ function minPWDist(points) {
     minDist[0]=distance(points[0],points[1]);
     minDist[1]=1
     minDist[2]=2
+    minDist[3]=distance(points[0],points[1]);
+    minDist[4]=1
+    minDist[5]=2
     for(let i = 0; i<points.length; i++){
         for(let j = i+1; j<points.length; j++){
             let dist = distance(points[i],points[j])
             if(dist<minDist[0]){
+                
                 minDist[0]=dist
                 minDist[1]=i+1
                 minDist[2]=j+1
             };
+            if(dist>minDist[3]){
+                
+                minDist[3]=dist
+                minDist[4]=i+1
+                minDist[5]=j+1
+            };
         }
     }
+    navigator.clipboard.writeText(minDist[0]);
     return minDist;
 }
 
@@ -111,15 +140,8 @@ function distance(pointA, pointB){
 
 
 document.getElementById("textInputButton").addEventListener("click", function() {
-            const content = document.getElementById('textInput').value
+            const content = inputBox.value
             process(content)
-            // const points = parse3DPoints(content);
-            // let dist = minPWDist(points);
-            // displayPoints(points, dist);
-            // // alert (dist)
-            // document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
-            // + " <br> Between points " + dist[1] + " and " +dist[2]
-
 });
 
 
@@ -129,7 +151,8 @@ function process(content){
     displayPoints(points, dist);
     // alert (dist)
     document.getElementById('results').innerHTML="Points Detected: " + points.length + " <br> Minimum Pairwise Distance: " + dist[0]
-    + " <br> Between points " + dist[1] + " and " +dist[2]
+    + " <br> Between points " + dist[1] + " and " +dist[2] + " <br> Maximum Pairwise Distance: " + dist[3]
+    + " <br> Between points " + dist[4] + " and " +dist[5] 
 }
 
 
@@ -257,6 +280,41 @@ function displayPoints(points, minDist){
     }
 }
 
+sizeSlider.addEventListener("input", (event) => {
+  
+  // Grab the current value of the slider and ensure it's a number
+  const scaleMultiplier = parseFloat(event.target.value);
+  
+  // Loop through every sphere currently on the screen
+  for (let i = 0; i < currentDisplay.length; i++) {
+    
+    // .set(x, y, z) scales the mesh uniformly in all directions
+    currentDisplay[i].scale.set(scaleMultiplier, scaleMultiplier, scaleMultiplier);
+    
+  }
+});
 
 
-// process(preloadedData[85].coords)
+// async function getCambridgeData() {
+//     const targetUrl = 'https://www-wales.ch.cam.ac.uk/~wales/CCD/FS_Fe/points/3';
+//     // We wrap the URL in a proxy service like allOrigins
+//     const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+
+//     try {
+//         const response = await fetch(proxyUrl);
+//         const data = await response.json();
+        
+//         // The raw text is inside data.contents
+//         const rawCoords = data.contents;
+//         console.log("Raw Coordinates:", rawCoords);
+        
+//         // You can now split the text into an array of numbers
+//         const coordsArray = rawCoords.trim().split(/\s+/).map(Number);
+//         console.log("Cleaned Array:", coordsArray);
+        
+//     } catch (error) {
+//         console.error("Failed to fetch data:", error);
+//     }
+// }
+
+// getCambridgeData();
