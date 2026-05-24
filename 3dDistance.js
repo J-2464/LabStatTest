@@ -1,6 +1,7 @@
 import * as THREE from 'https://esm.sh/three@0.160.0';
 import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 import { preloadedData } from './preload.js';
+import { rho2structs } from './coords.js';
 
 const inputBox = document.getElementById("textInput");
 const dropdown = document.getElementById("moleculeDropdown");
