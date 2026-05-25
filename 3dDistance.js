@@ -261,13 +261,19 @@ function displayPoints(points, minDist){
     let pointGeo = new THREE.SphereGeometry(minDist[0]/2, 32)
     let pointMesh = new THREE.MeshPhongMaterial({ color: 0xffff00 }); // yellow
     let minDistMesh = new THREE.MeshPhongMaterial({ color: 0xff0000 }); // Red
+    let maxDistMesh = new THREE.MeshPhongMaterial({ color: 0x00ff00 }); // Red
     let OGsphere = new THREE.Mesh(pointGeo, pointMesh)
     let specialSphere = new THREE.Mesh(pointGeo, minDistMesh)
+    let superSpecialSphere = new THREE.Mesh(pointGeo, maxDistMesh)
     for(let i = 0; i<points.length; i++){
 
         let sphere
         if(i==minDist[1]-1||i==minDist[2]-1){
             sphere = specialSphere.clone() 
+            console.log(i)
+        }
+        else if(i==minDist[4]-1||i==minDist[5]-1){
+            sphere = superSpecialSphere.clone() 
             console.log(i)
         }
         else{
