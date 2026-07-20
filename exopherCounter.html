@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minimal Image Centering</title>
+    <link rel="stylesheet" href="counter.css">
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+</head>
+
+
+    <script type="module" src="./ExopherCount.js"></script>
+
+    <script type="py" src="main.py" config='{"packages": ["pillow"]}'></script>
+
+<body>
+
+    <!-- Parent container locked to 100% of the viewport -->
+    <div class="app-parent">
+
+        <!-- Top Section: 80% height for the Image Display -->
+        <div class="top-section">
+            <div id="upload-prompt">
+                <h2>Upload up to 5 Images</h2>
+                <input type="file" id="file-input" accept="image/*" multiple autocomplete="off">
+            </div>
+            
+            <!-- Hidden by default until files are uploaded -->
+            <img id="display-image" class="hidden" alt="Current Image">
+        </div>
+
+        <!-- Bottom Section: 20% height for Controls & Dropdown -->
+        <div id="controls" class="bottom-section hidden">
+            <button id="prev-btn">&larr; Previous</button>
+            
+            <div class="control-group">
+                <span id="counter-text">Image 0 of 0</span>
+                
+                <!-- Dropdown that saves classification data to the array -->
+                <select id="label-dropdown">
+                    <option value="">-- Select Category --</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Needs Review">Needs Review</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+
+            <button id="next-btn">Next &rarr;</button>
+        </div>
+
+    </div>
+
+</body>
+</html>
