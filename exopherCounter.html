@@ -11,7 +11,7 @@
 
     <script type="module" src="./ExopherCount.js"></script>
 
-    <script type="py" src="main.py" config='{"packages": ["pillow"]}'></script>
+<script type="py" src="main.py" config='{"packages": ["pillow", "opencv-python", "scikit-image", "pandas", "scipy"]}'></script>
 
 <body>
 
@@ -19,6 +19,7 @@
     <div class="app-parent">
 
         <!-- Top Section: 80% height for the Image Display -->
+<!-- Top Section: 80% height for the Image Display -->
         <div class="top-section">
             <div id="upload-prompt">
                 <h2>Upload up to 5 Images</h2>
@@ -27,6 +28,9 @@
             
             <!-- Hidden by default until files are uploaded -->
             <img id="display-image" class="hidden" alt="Current Image">
+            
+            <!-- NEW: Result display element -->
+            <h3 id="prediction-display" class="hidden"></h3>
         </div>
 
         <!-- Bottom Section: 20% height for Controls & Dropdown -->

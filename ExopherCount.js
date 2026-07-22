@@ -7,6 +7,7 @@ const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const counterText = document.getElementById('counter-text');
 const labelDropdown = document.getElementById('label-dropdown');
+const predictionDisplay = document.getElementById('prediction-display'); // <-- NEW
 
 // App State
 let imagesArray = [];
@@ -28,15 +29,17 @@ fileInput.addEventListener('change', async (event) => {
     console.log("Sending array to Python...");
     
     // Python returns an array of ready-to-use Base64 image URL strings
-    const processedUrlArray = await window.runPythonImageProcessor(files);
+    const processedDataArray = await window.runPythonImageProcessor(files);
     
     console.log("Got processed images back from Python!");
 
     // Map the URL strings directly into your imagesArray
-    imagesArray = processedUrlArray.map((dataUrl, index) => {
+    // Change your mapping function to use .get() to read from the Pyodide Map:
+    imagesArray = processedDataArray.map((dataObj, index) => {
         return {
-            name: files[index].name, // Keep original file name from JS
-            url: dataUrl,            // Use the Base64 string from Python
+            name: files[index].name,         // Keep original file name from JS
+            url: dataObj.get("url"),         // <-- CHANGE THIS: use .get("url")
+            prediction: dataObj.get("prediction"), // <-- CHANGE THIS: use .get("prediction")
             category: ""
         };
     });
@@ -44,9 +47,8 @@ fileInput.addEventListener('change', async (event) => {
     // Switch view and display the first image
     uploadPrompt.classList.add('hidden');
     displayImage.classList.remove('hidden');
-    controls.classList.remove('hidden');
-
-    currentIndex = 0;
+    predictionDisplay.classList.remove('hidden'); // <-- Show the text element!
+    controls.classList.remove('hidden');    currentIndex = 0;
     updateScreen();
 });
 
@@ -74,11 +76,15 @@ labelDropdown.addEventListener('change', (event) => {
 });
 
 // 5. Master Screen Update Function
+// 5. Master Screen Update Function
 function updateScreen() {
     const currentImgData = imagesArray[currentIndex];
 
     // Update image source
     displayImage.src = currentImgData.url;
+    
+    // Update Prediction Display underneath the image
+    predictionDisplay.innerText = `Exopher Count: ${currentImgData.prediction}`;
 
     // Update counter text (e.g., "Image 2 of 5")
     counterText.innerText = `Image ${currentIndex + 1} of ${imagesArray.length}`;
