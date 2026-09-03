@@ -22,34 +22,51 @@
 <!-- Top Section: 80% height for the Image Display -->
         <div class="top-section">
             <div id="upload-prompt">
-                <h2>Upload up to 5 Images</h2>
-                <input type="file" id="file-input" accept="image/*" multiple autocomplete="off">
+                <h2>Upload Images</h2>
+                
+                <!-- NEW: Loading text -->
+                <p id="python-status" style="color: #ffaa00; font-weight: bold;">⏳ Loading Python Environment... Please wait.</p>
+                
+                <!-- CHANGED: Added 'disabled' attribute to the end -->
+                <input type="file" id="file-input" accept="image/*" multiple autocomplete="off" disabled>
             </div>
             
             <!-- Hidden by default until files are uploaded -->
             <img id="display-image" class="hidden" alt="Current Image">
             
             <!-- NEW: Result display element -->
-            <h3 id="prediction-display" class="hidden"></h3>
         </div>
 
         <!-- Bottom Section: 20% height for Controls & Dropdown -->
         <div id="controls" class="bottom-section hidden">
-            <button id="prev-btn">&larr; Previous</button>
+    <!-- Previous Button (Unchanged) -->
+            <button id="prev-btn">&#x21A9;</button>
             
-            <div class="control-group">
-                <span id="counter-text">Image 0 of 0</span>
+            <!-- New Triangular Middle Layout -->
+            <div class="middle-controls">
                 
-                <!-- Dropdown that saves classification data to the array -->
-                <select id="label-dropdown">
-                    <option value="">-- Select Category --</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Needs Review">Needs Review</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
+                <!-- Top Center: Dropdown -->
+                <div class="control-top">
+                    <select id="index-dropdown"></select>
+                </div>
+                
+                <!-- Bottom Left: Stats -->
+                <div class="control-left">
+                    <h1 id="prediction-display">Count: 0</h1>
+                    <span id="percentage-display"></span>
+                </div>
+                
+                <!-- Bottom Right: Actions -->
+                <div class="control-right">
+                    <button id="present-btn" class="action-btn">True</button>
+                    <button id="missing-btn" class="action-btn">False</button>
+                    <button id="remove-btn" class="action-btn">Remove</button>
+                </div>
+
             </div>
 
-            <button id="next-btn">Next &rarr;</button>
+            <button id="next-btn">&#x21AA;</button>
+        
         </div>
 
     </div>

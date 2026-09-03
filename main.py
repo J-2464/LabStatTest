@@ -67,7 +67,7 @@ def counter(image):
 
 
 
-
+    message = ''
     skip = False
     predictionA = 0
     predictionB = 0
@@ -78,8 +78,8 @@ def counter(image):
     num_labels_worm, labels_worm, stats_worm, centroids_worm = cv2.connectedComponentsWithStats(binary_worm, connectivity=8)
 
     if num_labels_worm <= 1:
-        raise ValueError("No worm found")
-
+        return('No worm found')
+    
     largest_label = 1 + np.argmax(stats_worm[1:, cv2.CC_STAT_AREA])
     worm_mask_bool = (labels_worm == largest_label)
     skeleton_bool = skeletonize(worm_mask_bool)
@@ -97,7 +97,7 @@ def counter(image):
         # COMPONENT ANALYSIS (USING DYNAMIC 'min_color')
         # =========================================================
         # ---> Swapped '150' for 'min_color' here <---
-        _, binary_bodies = cv2.threshold(image, 150, 255, cv2.THRESH_BINARY)
+        _, binary_bodies = cv2.threshold(image, 135, 255, cv2.THRESH_BINARY)
         binary_bodies = np.uint8(binary_bodies)
         num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary_bodies, connectivity=8)
 
@@ -178,6 +178,10 @@ def counter(image):
                     exopher_aspect_ratios   # 6: Aspect Ratio (Length / Width) <--- NEW
                 ))
 
+        if 'exopher_data_matrix' not in locals():
+            # matrix was never defined
+            return('Error reading Image')
+        
         strict_filter = (
             (exopher_data_matrix[:, 1] >= 7) & (exopher_data_matrix[:, 1] <= 200) &  # Size: 10 to 200px
             (exopher_data_matrix[:, 5] >= 0.225) & (exopher_data_matrix[:, 5] <= 0.875) # Location: 20% to 85%
@@ -193,10 +197,18 @@ def counter(image):
             # Use standard 'and', and use Python's chained comparisons for clean code
             if (exopher[1] >=150) and (0.15 <= exopher[5] <= 0.9):
                 skip=True
+                message = 'multiple worms / large body in middle'
+                return(message)
 
         # max_spine_percent = np.max(exopher_data_matrix[:, 5])
         # if max_spine_percent <=.875:
         #     skip=True
+
+        max_body_area = np.max(exopher_data_matrix[:, 1])
+        if max_body_area <= 100:
+            skip = True
+            message = 'no head present'
+            return(message)
 
 
         valid_exophers = exopher_data_matrix[strict_filter]
@@ -212,11 +224,16 @@ def counter(image):
 
         # if predicted_exophers != predicteder_exophers:
         #     skip = True
-        # if len(valid_exophers) < 2:
-        #     skip = True
-        # if len(valider_exophers) < 2:
-        #     skip = True
-
+        if len(valid_exophers) < 2:
+            skip = True
+            message = 'neuron missing'
+            return(message)
+        
+        if len(valider_exophers) < 2:
+            skip = True
+            message = 'neuron missing'
+            return(message)
+        
         predictionA = max(predicted_exophers,0)
         predictionB = max(predicteder_exophers, 0)
         predictionA = min(predictionA, 1)
@@ -225,148 +242,154 @@ def counter(image):
 
     #looser mask
 
-    _, binary_worm = cv2.threshold(image, 10, 255, cv2.THRESH_BINARY)
-    binary_worm = np.uint8(binary_worm)
-    num_labels_worm, labels_worm, stats_worm, centroids_worm = cv2.connectedComponentsWithStats(binary_worm, connectivity=8)
+    # _, binary_worm = cv2.threshold(image, 10, 255, cv2.THRESH_BINARY)
+    # binary_worm = np.uint8(binary_worm)
+    # num_labels_worm, labels_worm, stats_worm, centroids_worm = cv2.connectedComponentsWithStats(binary_worm, connectivity=8)
 
-    if num_labels_worm <= 1:
-        raise ValueError("No worm found")
+    # if num_labels_worm <= 1:
+    #     raise ValueError("No worm found")
 
-    largest_label = 1 + np.argmax(stats_worm[1:, cv2.CC_STAT_AREA])
-    worm_mask_bool = (labels_worm == largest_label)
-    skeleton_bool = skeletonize(worm_mask_bool)
+    # largest_label = 1 + np.argmax(stats_worm[1:, cv2.CC_STAT_AREA])
+    # worm_mask_bool = (labels_worm == largest_label)
+    # skeleton_bool = skeletonize(worm_mask_bool)
 
-    skeleton_pts = [tuple(pt) for pt in np.argwhere(skeleton_bool)]
-    pt_set = set(skeleton_pts)
+    # skeleton_pts = [tuple(pt) for pt in np.argwhere(skeleton_bool)]
+    # pt_set = set(skeleton_pts)
 
-    # (Assuming find_longest_path_from is defined in your notebook from before)
-    if skeleton_pts:
-        random_start = skeleton_pts[0]
-        endpoint_A, _ = find_longest_path_from(random_start, skeleton_bool)
-        endpoint_B, true_spine = find_longest_path_from(endpoint_A, skeleton_bool)
-        # =========================================================
-        # COMPONENT ANALYSIS (USING DYNAMIC 'min_color')
-        # =========================================================
-        # ---> Swapped '150' for 'min_color' here <---
-        _, binary_bodies = cv2.threshold(image, 100, 255, cv2.THRESH_BINARY)
-        binary_bodies = np.uint8(binary_bodies)
-        num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary_bodies, connectivity=8)
+    # # (Assuming find_longest_path_from is defined in your notebook from before)
+    # if skeleton_pts:
+    #     random_start = skeleton_pts[0]
+    #     endpoint_A, _ = find_longest_path_from(random_start, skeleton_bool)
+    #     endpoint_B, true_spine = find_longest_path_from(endpoint_A, skeleton_bool)
+    #     # =========================================================
+    #     # COMPONENT ANALYSIS (USING DYNAMIC 'min_color')
+    #     # =========================================================
+    #     # ---> Swapped '150' for 'min_color' here <---
+    #     _, binary_bodies = cv2.threshold(image, 100, 255, cv2.THRESH_BINARY)
+    #     binary_bodies = np.uint8(binary_bodies)
+    #     num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary_bodies, connectivity=8)
 
-        if num_labels > 1:
-            largest_body_index = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
-            cX, cY = centroids[largest_body_index]
+    #     if num_labels > 1:
+    #         largest_body_index = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
+    #         cX, cY = centroids[largest_body_index]
 
-            # Orientation Check
-            start_pt = true_spine[0]
-            end_pt = true_spine[-1]
+    #         # Orientation Check
+    #         start_pt = true_spine[0]
+    #         end_pt = true_spine[-1]
 
-            dist_to_start = (start_pt[1] - cX) ** 2 + (start_pt[0] - cY) ** 2
-            dist_to_end = (end_pt[1] - cX) ** 2 + (end_pt[0] - cY) ** 2
+    #         dist_to_start = (start_pt[1] - cX) ** 2 + (start_pt[0] - cY) ** 2
+    #         dist_to_end = (end_pt[1] - cX) ** 2 + (end_pt[0] - cY) ** 2
 
-            if dist_to_end < dist_to_start:
-                true_spine = true_spine[::-1]
+    #         if dist_to_end < dist_to_start:
+    #             true_spine = true_spine[::-1]
 
-            # KD-Tree Distance Mapping
-            spine_array = np.array(true_spine)
-            total_spine_points = len(spine_array)
-            spine_tree = KDTree(spine_array)
+    #         # KD-Tree Distance Mapping
+    #         spine_array = np.array(true_spine)
+    #         total_spine_points = len(spine_array)
+    #         spine_tree = KDTree(spine_array)
 
-            exopher_indices = [i for i in range(1, num_labels)]
-                            #  if i != largest_body_index
-
-
-            if exopher_indices:
-                raw_centroids = centroids[exopher_indices] # Shape: (M, 2) -> [X, Y]
-                centroids_flipped = np.column_stack((raw_centroids[:, 1], raw_centroids[:, 0]))
-
-                distances, closest_spine_indices = spine_tree.query(centroids_flipped)
-                percentages = closest_spine_indices / (total_spine_points - 1)
-
-                # --- NEW EXTRACTION BLOCK ---
-                # Pull the raw areas for just these exophers
-                exopher_areas = stats[exopher_indices, cv2.CC_STAT_AREA] # Shape: (M,)
-
-                # --- NEW EXTRACTION BLOCK ---
-                # Pull the raw areas for just these exophers
-                exopher_areas = stats[exopher_indices, cv2.CC_STAT_AREA]
-
-                # Calculate True Rotated Aspect Ratio (Handles Diagonals!)
-                exopher_aspect_ratios = []
-
-                for label_id in exopher_indices:
-                    # Get all (Y, X) pixel coordinates for this specific body
-                    pts_yx = np.column_stack(np.where(labels == label_id))
-
-                    if len(pts_yx) >= 5: # Need at least a few points to make a rectangle safely
-                        # Convert to (X, Y) and float32 format for cv2.minAreaRect
-                        pts_xy = np.float32(pts_yx[:, ::-1])
-
-                        # Get the shrink-wrapped rotated rectangle
-                        # Returns: (center(x, y), (width, height), angle of rotation)
-                        rect = cv2.minAreaRect(pts_xy)
-                        w, h = rect[1]
-
-                        # Prevent division by zero
-                        min_dim = max(min(w, h), 1)
-                        max_dim = max(w, h)
-                        ratio = max_dim / min_dim
-                    else:
-                        ratio = 1.0 # Too small to measure accurately
-
-                    exopher_aspect_ratios.append(ratio)
-
-                exopher_aspect_ratios = np.array(exopher_aspect_ratios)
-
-                # Stack everything together horizontally:
-                # Columns: [Label ID, Area, Centroid_X, Centroid_Y, Distance_To_Spine, Spine_Percentage]
-                exopher_data_matrix = np.column_stack((
-                    exopher_indices,      # The original label ID
-                    exopher_areas,        # Size of the body
-                    raw_centroids[:, 0],  # X coordinate
-                    raw_centroids[:, 1],  # Y coordinate
-                    distances,            # Distance away from the spine in pixels
-                    percentages,           # 0.0 to 1.0 location on the worm
-                    exopher_aspect_ratios   # 6: Aspect Ratio (Length / Width) <--- NEW
-                ))
-
-        loosest_filter = (
-            (exopher_data_matrix[:, 1] >= 2) & (exopher_data_matrix[:, 1] <= 200) &  # Size: 10 to 200px
-            (exopher_data_matrix[:, 5] >= 0.225) & (exopher_data_matrix[:, 5] <= 0.875) # Location: 20% to 85%
-        )
+    #         exopher_indices = [i for i in range(1, num_labels)]
+    #                         #  if i != largest_body_index
 
 
-        # for index, exopher in enumerate(exopher_data_matrix):
+    #         if exopher_indices:
+    #             raw_centroids = centroids[exopher_indices] # Shape: (M, 2) -> [X, Y]
+    #             centroids_flipped = np.column_stack((raw_centroids[:, 1], raw_centroids[:, 0]))
 
-        #     # Use standard 'and', and use Python's chained comparisons for clean code
-        #     if (exopher[1] >=150) and (0.15 <= exopher[5] <= 0.9):
-        #         skip=True
+    #             distances, closest_spine_indices = spine_tree.query(centroids_flipped)
+    #             percentages = closest_spine_indices / (total_spine_points - 1)
+
+    #             # --- NEW EXTRACTION BLOCK ---
+    #             # Pull the raw areas for just these exophers
+    #             exopher_areas = stats[exopher_indices, cv2.CC_STAT_AREA] # Shape: (M,)
+
+    #             # --- NEW EXTRACTION BLOCK ---
+    #             # Pull the raw areas for just these exophers
+    #             exopher_areas = stats[exopher_indices, cv2.CC_STAT_AREA]
+
+    #             # Calculate True Rotated Aspect Ratio (Handles Diagonals!)
+    #             exopher_aspect_ratios = []
+
+    #             for label_id in exopher_indices:
+    #                 # Get all (Y, X) pixel coordinates for this specific body
+    #                 pts_yx = np.column_stack(np.where(labels == label_id))
+
+    #                 if len(pts_yx) >= 5: # Need at least a few points to make a rectangle safely
+    #                     # Convert to (X, Y) and float32 format for cv2.minAreaRect
+    #                     pts_xy = np.float32(pts_yx[:, ::-1])
+
+    #                     # Get the shrink-wrapped rotated rectangle
+    #                     # Returns: (center(x, y), (width, height), angle of rotation)
+    #                     rect = cv2.minAreaRect(pts_xy)
+    #                     w, h = rect[1]
+
+    #                     # Prevent division by zero
+    #                     min_dim = max(min(w, h), 1)
+    #                     max_dim = max(w, h)
+    #                     ratio = max_dim / min_dim
+    #                 else:
+    #                     ratio = 1.0 # Too small to measure accurately
+
+    #                 exopher_aspect_ratios.append(ratio)
+
+    #             exopher_aspect_ratios = np.array(exopher_aspect_ratios)
+
+    #             # Stack everything together horizontally:
+    #             # Columns: [Label ID, Area, Centroid_X, Centroid_Y, Distance_To_Spine, Spine_Percentage]
+    #             exopher_data_matrix = np.column_stack((
+    #                 exopher_indices,      # The original label ID
+    #                 exopher_areas,        # Size of the body
+    #                 raw_centroids[:, 0],  # X coordinate
+    #                 raw_centroids[:, 1],  # Y coordinate
+    #                 distances,            # Distance away from the spine in pixels
+    #                 percentages,           # 0.0 to 1.0 location on the worm
+    #                 exopher_aspect_ratios   # 6: Aspect Ratio (Length / Width) <--- NEW
+    #             ))
+
+    #     loosest_filter = (
+    #         (exopher_data_matrix[:, 1] >= 2) & (exopher_data_matrix[:, 1] <= 200) &  # Size: 10 to 200px
+    #         (exopher_data_matrix[:, 5] >= 0.225) & (exopher_data_matrix[:, 5] <= 0.875) # Location: 20% to 85%
+    #     )
+
+
+    #     # for index, exopher in enumerate(exopher_data_matrix):
+
+    #     #     # Use standard 'and', and use Python's chained comparisons for clean code
+    #     #     if (exopher[1] >=150) and (0.15 <= exopher[5] <= 0.9):
+    #     #         skip=True
 
 
 
 
-        valid_exophers = exopher_data_matrix[loosest_filter]
+    #     valid_exophers = exopher_data_matrix[loosest_filter]
 
 
-        budding_extras = np.sum((valid_exophers[:, 6] * valid_exophers[:, 1])>=175)
-        # budding_extras = np.sum((valid_exophers[:, 6]) >= test_location & (valid_exophers[:, 1]) >= test_lize)
+    #     budding_extras = np.sum((valid_exophers[:, 6] * valid_exophers[:, 1])>=175)
+    #     # budding_extras = np.sum((valid_exophers[:, 6]) >= test_location & (valid_exophers[:, 1]) >= test_lize)
 
 
-        predicted_exophers = len(valid_exophers)-2 #+ budding_extras
+    #     predicted_exophers = len(valid_exophers)-2 #+ budding_extras
 
-        # if predicted_exophers != predicteder_exophers:
-        #     skip = True
-        if len(valid_exophers) < 2:
-            skip = True
-        if len(valider_exophers) < 2:
-            skip = True
+    #     # if predicted_exophers != predicteder_exophers:
+    #     #     skip = True
+    #     if len(valid_exophers) < 2:
+    #         skip = True
+    #     if len(valider_exophers) < 2:
+    #         skip = True
 
-        predictionC = max(predicted_exophers,0)
-        predictionC = min(predictionC, 1)
+    #     predictionC = max(predicted_exophers,0)
+    #     predictionC = min(predictionC, 1)
 
-    print(predictionA, predictionB, predictionC)
+    print(predictionA, predictionB)
+    if predictionA != predictionB:
+        skip = True
+        message = 'unsure'
+        return(message)
+    
     if skip:
-        return(-1)
-    return(predictionB)    
+        return(message)
+    
+    return(predictionA)    
 
 
 async def process_image_batch(js_file_array):
