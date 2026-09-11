@@ -36,22 +36,22 @@
         
         h1 {
             font-size: 2.8rem;
-            color: #2c3e50;
+            color: #502c2c;
             margin-bottom: 10px;
-            background: linear-gradient(90deg, #3498db, #2c3e50);
+            background: linear-gradient(90deg, #db3434, #502c2c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
+        }   
         
         .subtitle {
             font-size: 1.2rem;
-            color: #7f8c8d;
+            color: #8d7f7f;
             margin-bottom: 20px;
         }
         
         .tools-intro {
             font-size: 1.1rem;
-            color: #34495e;
+            color: #5e3434;
             max-width: 700px;
             margin: 0 auto;
             line-height: 1.6;
@@ -82,8 +82,8 @@
         
         .card-header {
             padding: 25px 25px 15px;
-            background: linear-gradient(to right, #3498db, #2980b9);
-            color: white;
+            background: linear-gradient(to right, #db3434, #b92929);
+            color: rgb(255, 255, 255);
         }
         
         .card-header h2 {
@@ -112,7 +112,7 @@
         
         .card-features h3 {
             font-size: 1.1rem;
-            color: #2c3e50;
+            color: #502c2c;
             margin-bottom: 10px;
         }
         
@@ -134,7 +134,7 @@
             display: block;
             width: 100%;
             padding: 16px;
-            background: linear-gradient(to right, #2ecc71, #27ae60);
+            background: linear-gradient(to right, #2ecc8f, #27aea7);
             color: white;
             border: none;
             border-radius: 10px;
@@ -148,7 +148,7 @@
         }
         
         .tool-button:hover {
-            background: linear-gradient(to right, #27ae60, #219653);
+            background: linear-gradient(to right, #2ecc8f, #27aea7);
             box-shadow: 0 7px 20px rgba(46, 204, 113, 0.4);
             transform: translateY(-2px);
         }
@@ -158,12 +158,12 @@
         }
         
         .distance-button {
-            background: linear-gradient(to right, #9b59b6, #8e44ad);
+            background: linear-gradient(to right, #a5b659, #94ad44);
             box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
         }
         
         .distance-button:hover {
-            background: linear-gradient(to right, #8e44ad, #7d3c98);
+            background: linear-gradient(to right, #a5b659, #94ad44);
             box-shadow: 0 7px 20px rgba(155, 89, 182, 0.4);
         }
         
@@ -205,21 +205,19 @@
             <div class="tool-card">
                 <div class="card-header">
                     <h2>CMH Calculator</h2>
-                    <p>Cochran-Mantel-Haenszel Statistics</p>
+                    <p></p>
                 </div>
                 
                 <div class="card-body">
                     <p class="card-description">
-                        The Cochran-Mantel-Haenszel calculator is used to analyze the association between two binary variables, while controlling for one or more confounding variables. This is particularly useful in stratified analysis.
+                        The Cochran-Mantel-Haenszel calculator is used to analyze the association between two binary variables, while controlling for one or more confounding variables.
                     </p>
                     
                     <div class="card-features">
                         <h3>Key Features:</h3>
                         <ul>
                             <li>Calculate CMH common odds ratio estimate</li>
-                            <li>Compute Mantel-Haenszel statistics</li>
-                            <li>Stratified analysis with multiple layers</li>
-                            <li>Confidence interval calculation</li>
+                            <li>Shows Recents Calculations</li>
                             <li>Export results for reporting</li>
                         </ul>
                     </div>
@@ -233,29 +231,27 @@
             <!-- Pairwise Distance Calculator Card -->
             <div class="tool-card">
                 <div class="card-header">
-                    <h2>Pairwise Distance Calculator</h2>
-                    <p>3D Distance Calculations</p>
+                    <h2>3D Structure Viewer</h2>
                 </div>
                 
                 <div class="card-body">
                     <p class="card-description">
-                        Calculate Euclidean distances between multiple points in three-dimensional space. This tool is ideal for spatial analysis, molecular modeling, or any application requiring precise distance measurements in 3D.
+                        Plots points in a 3 dimensional space to view the structure and analyze the cluster.
                     </p>
                     
                     <div class="card-features">
                         <h3>Key Features:</h3>
                         <ul>
-                            <li>Calculate distances between multiple 3D points</li>
-                            <li>Support for batch processing of point pairs</li>
+                            <li>Calculates Minimum Pairwise Distance</li>
+                            <li>Adjustable Point of View</li>
                             <li>Visual representation of points in space</li>
-                            <li>Export distance matrix for further analysis</li>
-                            <li>Customizable coordinate input formats</li>
+                            <li>Allows multiple file type inputs</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="button-container">
-                    <button class="tool-button distance-button" onclick="window.location.href='3dDistance.html';">Open Distance Calculator</button>
+                    <button class="tool-button distance-button" onclick="window.location.href='3dDistance.html';">Open 3D viewer</button>
                 </div>
             </div>
             
@@ -282,7 +278,7 @@
             </div>
 
             <!-- Additional Tool Card (example) -->
-            <div class="tool-card">
+            <!-- <div class="tool-card">
                 <div class="card-header">
                     <h2>Exopher Counter</h2>
                     <p></p>
@@ -308,11 +304,11 @@
                 <div class="button-container">
                     <button class="tool-button" onclick="window.location.href='ExopherCounter.html';">Coming Soon</button>
                 </div>
-            </div>
+            </div> -->
         </div>
         
         <footer>
-            <p>Calculator Tools v1.0 | Designed for researchers and data analysts</p>
+            <p>Calculator Tools v1.1 | Designed for researchers and data analysts</p>
             <p>All calculations are performed locally in your browser for privacy.</p>
         </footer>
     </div>

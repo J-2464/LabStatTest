@@ -78,7 +78,7 @@ pVal = 1-jStat.chisquare.cdf(almostDone, 1);
 history.push(pVal);
 RecentCalcs = document.getElementById("recentCalcs");
 var textNode = document.createElement('div');
-textNode.textContent = pVal;
+textNode.textContent = pVal.toFixed(8);
 // var br = document.createElement("br");
 RecentCalcs.prepend(textNode);
 

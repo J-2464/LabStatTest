@@ -5,6 +5,7 @@
 }
 
 #inputContainer{
+    margin-top: 17px;
     font-family: 'Inter', sans-serif; /* Change to your desired font */
     font-size: 18; /* Set the font size you want */
     display: flex; 
@@ -23,15 +24,16 @@
     display: flex; /* Hidden by default */
     position:absolute;
     margin-top: 5px;
-    top: 0%;
+    top: 105px;
     right: 2.5%;
     width: 20%;
-    background: rgb(255, 255, 255); /* Transparent black background */
+    background: transparent; /* Transparent black background */
     justify-content: center;
     align-items: center;
     flex-direction: column;    border-color: black;
     border: 2px solid;
     border-radius: 20px;
+    
     /* height: 100%;
     flex-wrap: wrap; */
 }
@@ -47,8 +49,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    /* margin-top: 20px;
-    padding: 10px; */
+    margin-top: 20px;
+    padding: 10px;
 }
 
 #recentCalcs > div{
@@ -103,7 +105,7 @@ display:none;
     bottom: 0;
     top: auto;
     transition: all 0.3s ease;
-    background: white;
+    background: transparent;
 }
 
 
@@ -172,6 +174,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
 }
 
 button { 
@@ -184,7 +188,9 @@ button {
     cursor: pointer;
     border-radius: 50%;
     font-size:xx-large;
-    outline: none
+    outline: none;
+    border: 2px solid gray; /* Or whatever color you want the 'outline' to be */
+
 }
 button:hover {
     border: 2px solid black; /* Black outline on hover */
@@ -195,6 +201,7 @@ input {
     /* padding: 20px;
     border-color: black; */
     outline: none;
+    background: transparent;
     border: none;
     box-shadow: none;
     font-size: large;
@@ -243,6 +250,8 @@ table td {
     cursor: pointer;
     border-radius: 50%;
     font-size:xx-large;
+    border: 2px solid gray; /* Or whatever color you want the 'outline' to be */
+    outline: none; /* This removes the blue focus ring some browsers add */
 }
 #custom-file-upload:hover {
     border: 2px solid black; /* Black outline on hover */
@@ -292,7 +301,7 @@ footer {
 
 
         header {
-            background-color: #8B0000; /* Dark red */
+            background: linear-gradient(to right, #db3434, #b92929);
             color: white;
             padding: 1rem 2rem;
             /* position: fixed; */
@@ -300,7 +309,7 @@ footer {
             left: 0;
             /* width: 100%; */
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); */
             /* height:5% */
         }
 
