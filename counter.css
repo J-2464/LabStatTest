@@ -24,6 +24,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -49,15 +50,66 @@ body {
     justify-content: center;
     align-items: center;
     gap: 5vw;
-    background-color: #121212;
+    background-color: #000000;
     border-top: 0.2vh solid #2d2d2d;
 }
 
-.control-group {
+.middle-controls {
+    /* 1. Align to the top of the bottom-section instead of the center */
+    align-self: flex-start;
+    margin-top: 2vh; /* Adds a little breathing room from the top border */
+    
+    display: grid;
+    
+    /* 2. Fix the layout shifting by giving the container a hard width */
+    width: 40vw; 
+    min-width: 350px; /* Ensures it doesn't get too squished on small screens */
+    
+    /* 3. Force the left and right columns to be exactly 50% width each */
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "top top"
+        "left right";
+    row-gap: 2vh;
+    
+    /* Removed column-gap since the fixed columns handle the spacing naturally */
+    align-items: center;
+}
+
+.control-top {
+    grid-area: top;
+    justify-self: center;
+}
+
+.control-left {
+    grid-area: left;
+    justify-self: start;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    gap: 0.5vh;
+}
+
+#prediction-display {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+#percentage-display {
+    font-size: 1rem;
+    color: #aaaaaa; /* slightly dimmed to look like a subtitle */
+}
+
+.control-right {
+    grid-area: right;
+    justify-self: end;
+    display: flex;
+    flex-direction: column; /* Stacks the 3 buttons vertically */
     gap: 1vh;
+}
+
+#index-dropdown {
+    font-size: xx-large;
 }
 
 /* Flexible sizing for interactive elements using viewport units */
@@ -67,11 +119,52 @@ button, select, input[type="file"] {
 }
 
 button {
-    background-color: #3b82f6;
-    color: white;
+    /* background-color: cornflowerblue; */
     border: none;
+    cursor: pointer;
+    
     border-radius: 0.5vw;
-    padding: 1.5vh 3vw; /* Sized via screen percentages instead of pixels */
+    
+    /* Perfectly centers the arrow vertically and horizontally */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Adds a smooth fade-in for the hover effect */
+    transition: background-color 5.2s linear;
+}
+
+/* Base Arrow Colors */
+#prev-btn {
+    background-color: transparent;
+    color: #c8bdda; /* Red arrow */
+    font-size: 100px;
+    position: absolute;
+    left: 2vw; /* Distance from the left edge */
+}
+
+#next-btn {
+    color: #c8bdda; /* Green arrow */
+    background-color: transparent;
+    font-size: 100px;
+    position: absolute;
+    right: 2vw; /* Distance from the right edge */
+    
+
+}
+
+
+/* Hover State */
+button:hover {
+    /* Uses semi-transparent white. 
+       Note: If your website background is already white, 
+       change this to rgba(0, 0, 0, 0.1) for a light gray circle instead */
+    background-color: rgb(192, 3, 3); 
+}
+
+#prev-btn:hover,
+#next-btn:hover {
+    background-color: rgba(187, 187, 187, 0.196); /* Dark red */
 }
 
 button:disabled {
