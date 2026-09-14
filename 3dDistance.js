@@ -112,12 +112,7 @@ function minPWDist(points) {
     for(let i = 0; i<points.length; i++){
         for(let j = i+1; j<points.length; j++){
             let dist = distance(points[i],points[j])
-<<<<<<< Updated upstream
             if(dist<minDist[0]){
-                
-=======
-            if(dist>minDist[0]){
->>>>>>> Stashed changes
                 minDist[0]=dist
                 minDist[1]=i+1
                 minDist[2]=j+1
